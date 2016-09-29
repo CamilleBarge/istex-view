@@ -8,7 +8,5 @@ services:
     image: istex/istex-view:latest
     volumes:
       - ./logs/:/var/log/nginx
-      - ./www:/usr/share/nginx/html
-      - ./ngnix/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - 45445:80

@@ -23,9 +23,12 @@ install: ## install depedencies thanks to a dockerized npm install
 build: ## build the docker istex/istex-view image locally
 	@docker build -t istex/istex-view --build-arg http_proxy --build-arg https_proxy .
 
-run-debug: ## run istex-view
+run-prod: ## run istex-view in production mode
 	@docker-compose -f ./docker-compose.yml up -d
 	@tail -f -n 0 ./logs/*.log
+
+run-debug: ## run istex-view in debug mode (regenerate the bundle.js if js are modified on fs)
+	@docker-compose -f ./docker-compose.debug.yml up
 
 # makefile rule used to keep current user's unix rights on the docker mounted files
 chown:
