@@ -4,8 +4,7 @@ services:
 
   istex-view-rp:
     container_name: istex-view-rp
-    build: .
-    image: istex/istex-view:latest
+    image: nginx:1.11.4
     links:
       - istex-view-www
     volumes:
