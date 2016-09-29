@@ -19,7 +19,6 @@
     ]
   },
   "dependencies": {
-    "pdfjs-dist": "1.5.492",
     "react": "15.3.2",
     "react-dom": "15.3.2",
     "react-pdf": "0.0.10"
