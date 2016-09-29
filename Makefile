@@ -25,7 +25,7 @@ build: ## build the docker istex/istex-view image locally
 
 run-debug: ## run istex-view
 	@docker-compose -f ./docker-compose.yml up -d
-	@tail -f ./logs/*.log
+	@tail -f -n 0 ./logs/*.log
 
 # makefile rule used to keep current user's unix rights on the docker mounted files
 chown:
