@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+
+  istex-view:
+    container_name: istex-view
+    build: .
+    image: istex/istex-view:latest
+    volumes:
+      - ./logs/:/var/log/nginx
+      - ./www:/usr/share/nginx/html
+    ports:
+      - 45445:80

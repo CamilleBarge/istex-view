@@ -3,11 +3,11 @@
   "description": "Visualisation interactive des documents ISTEX",
   "private": true,
   "scripts": {
-    "watchify": "watchify -vd -p browserify-hmr -e src/main.js -o dist/build.js",
-    "serve": "http-server -c 1 -a localhost",
+    "watchify": "watchify -vd -p browserify-hmr -e www/src/main.js -o www/dist/build.js",
+    "serve": "http-server -c 1 -a localhost www/",
     "dev": "npm-run-all --parallel watchify serve",
-    "build": "cross-env NODE_ENV=production browserify -e src/main.js | uglifyjs -c warnings=false -m > dist/build.js",
-    "lint": "eslint --ext .js,.jsx src",
+    "build": "cross-env NODE_ENV=production browserify -e www/src/main.js | uglifyjs -c warnings=false -m > www/dist/build.js",
+    "lint": "eslint --ext .js,.jsx www/src",
     "test": ""
   },
   "browserify": {
