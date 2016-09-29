@@ -10,7 +10,6 @@
     "lint": "eslint --ext .js,.jsx www/src",
     "version": "./tools/make-version",
     "postversion": "git push && git push --tags"
-    "test": ""
   },
   "browserify": {
     "transform": [
