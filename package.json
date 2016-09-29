@@ -8,6 +8,8 @@
     "dev": "npm-run-all --parallel watchify serve",
     "build": "cross-env NODE_ENV=production browserify -e www/src/main.js | uglifyjs -c warnings=false -m > www/dist/build.js",
     "lint": "eslint --ext .js,.jsx www/src",
+    "version": "./tools/make-version",
+    "postversion": "git push && git push --tags"
     "test": ""
   },
   "browserify": {
