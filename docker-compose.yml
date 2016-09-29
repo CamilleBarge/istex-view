@@ -4,7 +4,6 @@ services:
 
   istex-view:
     container_name: istex-view
-    build: .
     image: istex/istex-view:1.0.1
     volumes:
       - ./logs/:/var/log/nginx
