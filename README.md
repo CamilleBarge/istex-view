@@ -19,3 +19,9 @@ make install
 make build
 make run-prod
 ```
+
+# Mise à jour des librairies
+
+Pour vérifier la disponibilités d'une nouvelle version : ``bower list``
+
+Pour mettre à jour : ``bower update``
