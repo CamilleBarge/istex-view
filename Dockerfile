@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get -y update && apt-get -y install vim curl
 
 # la configuration du ngnix
-COPY ./ngnix/default.conf /etc/nginx/conf.d/default.conf
+COPY ./ngnix/prod.conf /etc/nginx/conf.d/default.conf
 
 # le code source
 COPY ./www/ /usr/share/nginx/html/
