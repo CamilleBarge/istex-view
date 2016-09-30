@@ -11,6 +11,7 @@ var Pdf = React.createClass({
       React.PropTypes.file,
       React.PropTypes.string
     ]),
+    token: React.PropTypes.string,
     content: React.PropTypes.string,
     page: React.PropTypes.number,
     scale: React.PropTypes.number,
@@ -31,7 +32,14 @@ var Pdf = React.createClass({
   },
   _loadPDFDocument: function(props) {
     if(!!props.file){
-      if (typeof props.file === 'string') return PDFJS.getDocument(props.file).then(this._onDocumentComplete);
+      if (typeof props.file === 'string') {
+        return PDFJS.getDocument({
+          url: props.file,
+          httpHeaders: {
+            Authorization: 'Bearer ' + props.token
+          }
+        }).then(this._onDocumentComplete);
+      }
       // Is a File object
       var reader = new FileReader(), self = this;
       reader.onloadend = function() {
