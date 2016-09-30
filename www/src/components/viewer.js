@@ -1,5 +1,5 @@
 var React = require('react');
-var PDF   = require('react-pdf');
+var PDF   = require('./react-pdf.js');
 
 module.exports = React.createClass({
   displayName: 'Viewer',
