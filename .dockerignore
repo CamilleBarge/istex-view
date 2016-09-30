@@ -4,3 +4,4 @@ Makefile
 .git
 npm-debug.log
 node_modules
+token.txt
