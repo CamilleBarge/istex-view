@@ -61,7 +61,9 @@ var Pdf = React.createClass({
     }
   },
   componentWillReceiveProps: function(newProps) {
-    if ((newProps.file && newProps.file !== this.props.file) || (newProps.content && newProps.content !== this.props.content)) {
+    if ((newProps.file && newProps.file !== this.props.file) ||
+        (newProps.token && newProps.token !== this.props.token) ||
+        (newProps.content && newProps.content !== this.props.content)) {
       this.setState({page: null});
       this._loadPDFDocument(newProps);
     } else if (!!this.state.pdf && !!newProps.page && newProps.page !== this.props.page) {

@@ -30,9 +30,20 @@ module.exports = React.createClass({
       file: ev.target.files[0]
     });
   },
+  handleTokenChange: function(event) {
+    this.setState({token: event.target.value});
+  },
+  handlePDFURLChange: function(event) {
+    this.setState({file: event.target.value});
+  },
   render: function () {
     return (
       <div className="container">
+        <input type="text" placeholder="ISTEX JWT token" style={{width:'100%'}}
+               value={this.state.token} onChange={this.handleTokenChange} />
+        <br/>
+        <input type="text" placeholder="ISTEX PDF URL" style={{width:'100%'}}
+               value={this.state.file} onChange={this.handlePDFURLChange} />
         <PDF page={this.state.currentPage} file={this.state.file} token={this.state.token} onDocumentComplete={this._onDocumentComplete} />
         <div>
           <button onClick={this.prevPage}>Previous page</button>
