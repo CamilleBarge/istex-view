@@ -7,11 +7,8 @@ var ReactDOM = require('react-dom');
 var Pdf = React.createClass({
   displayName: 'React-PDF',
   propTypes: {
-    file: React.PropTypes.oneOfType([
-      React.PropTypes.file,
-      React.PropTypes.string
-    ]),
-    token: React.PropTypes.string,
+    file: React.PropTypes.string,
+    jwtToken: React.PropTypes.string,
     content: React.PropTypes.string,
     page: React.PropTypes.number,
     scale: React.PropTypes.number,
@@ -36,7 +33,7 @@ var Pdf = React.createClass({
         return PDFJS.getDocument({
           url: props.file,
           httpHeaders: {
-            Authorization: 'Bearer ' + props.token
+            Authorization: 'Bearer ' + props.jwtToken
           }
         }).then(this._onDocumentComplete);
       }
@@ -62,7 +59,7 @@ var Pdf = React.createClass({
   },
   componentWillReceiveProps: function(newProps) {
     if ((newProps.file && newProps.file !== this.props.file) ||
-        (newProps.token && newProps.token !== this.props.token) ||
+        (newProps.jwtToken && newProps.jwtToken !== this.props.jwtToken) ||
         (newProps.content && newProps.content !== this.props.content)) {
       this.setState({page: null});
       this._loadPDFDocument(newProps);

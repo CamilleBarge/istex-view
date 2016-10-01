@@ -11,8 +11,8 @@ module.exports = React.createClass({
     return {
       currentPage: 2,
       pages: 0,
-      file: 'https://api-integ.istex.fr/document/195738F43F3FE6AD276CD8BAC3E554562B5BD60D/fulltext/pdf',
-      token: ''
+      istexId: '195738F43F3FE6AD276CD8BAC3E554562B5BD60D',
+      istexToken: ''
     };
   },
   prevPage: function (ev) {
@@ -25,26 +25,25 @@ module.exports = React.createClass({
     ev.preventDefault();
     this.setState({ currentPage: this.state.currentPage < this.state.pages ? this.state.currentPage + 1 : this.state.pages });
   },
-  onFileChange: function (ev) {
-    this.setState({
-      file: ev.target.files[0]
-    });
+  handleIstexTokenChange: function(event) {
+    this.setState({istexToken: event.target.value});
   },
-  handleTokenChange: function(event) {
-    this.setState({token: event.target.value});
-  },
-  handlePDFURLChange: function(event) {
-    this.setState({file: event.target.value});
+  handleIstexIdChange: function(event) {
+    this.setState({istexId: event.target.value});
   },
   render: function () {
+    var pdfUrl = 'https://api-integ.istex.fr/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view';
     return (
       <div className="container">
         <input type="text" placeholder="ISTEX JWT token" style={{width:'100%'}}
-               value={this.state.token} onChange={this.handleTokenChange} />
+               value={this.state.istexToken} onChange={this.handleIstexTokenChange} />
         <br/>
-        <input type="text" placeholder="ISTEX PDF URL" style={{width:'100%'}}
-               value={this.state.file} onChange={this.handlePDFURLChange} />
-        <PDF page={this.state.currentPage} file={this.state.file} token={this.state.token} onDocumentComplete={this._onDocumentComplete} />
+        <input type="text" placeholder="ISTEX ID" style={{width:'100%'}}
+               value={this.state.istexId} onChange={this.handleIstexIdChange} />
+        <PDF page={this.state.currentPage}
+             file={pdfUrl}
+             jwtToken={this.state.istexToken}
+             onDocumentComplete={this._onDocumentComplete} />
         <div>
           <button onClick={this.prevPage}>Previous page</button>
           <button onClick={this.nextPage}>Next page</button>
