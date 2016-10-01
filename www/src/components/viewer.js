@@ -2,8 +2,9 @@
  * @jsx React.DOM
  */
 
-var React = require('react');
-var PDF   = require('./react-pdf.js');
+var React  = require('react');
+var cookie = require('react-cookie');
+var PDF    = require('./react-pdf.js');
 
 module.exports = React.createClass({
   displayName: 'Viewer',
@@ -11,8 +12,8 @@ module.exports = React.createClass({
     return {
       currentPage: 2,
       pages: 0,
-      istexId: '195738F43F3FE6AD276CD8BAC3E554562B5BD60D',
-      istexToken: ''
+      istexId: (cookie.load('istexId') ? cookie.load('istexId') : '195738F43F3FE6AD276CD8BAC3E554562B5BD60D'),
+      istexToken: cookie.load('istexToken')
     };
   },
   prevPage: function (ev) {
@@ -27,9 +28,11 @@ module.exports = React.createClass({
   },
   handleIstexTokenChange: function(event) {
     this.setState({istexToken: event.target.value});
+    cookie.save('istexToken', event.target.value, { path: '/' });
   },
   handleIstexIdChange: function(event) {
     this.setState({istexId: event.target.value});
+    cookie.save('istexId', event.target.value, { path: '/' });
   },
   render: function () {
     var pdfUrl = 'https://api-integ.istex.fr/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view';

@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "react": "15.3.2",
+    "react-cookie": "^0.4.8",
     "react-dom": "15.3.2"
   },
   "devDependencies": {
