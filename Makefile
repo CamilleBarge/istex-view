@@ -32,7 +32,7 @@ run-debug: ## run istex-view in debug mode (live regenerate the bundle.js if js 
 
 # makefile rule used to keep current user's unix rights on the docker mounted files
 chown:
-	@test ! -d $$(pwd)/node_modules || docker run -it --rm --net=host -v $$(pwd):/app node:${NODE_VERSION} chown -R $$(id -u):$$(id -g) /app/
+	@test ! -d $$(pwd)/node_modules || docker run -it --rm --net=host -v $$(pwd):/app node:4.4.0 chown -R $$(id -u):$$(id -g) /app/
 
 npm: ## npm wrapper. example: make npm install --save mongodb-querystring
 	@docker run -it --rm -v $$(pwd):/app -w /app --net=host -e NODE_ENV -e http_proxy -e https_proxy node:4.4.0 npm $(filter-out $@,$(MAKECMDGOALS))
