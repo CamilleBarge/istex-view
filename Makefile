@@ -27,7 +27,7 @@ run-prod: ## run istex-view in production mode
 	@docker-compose -f ./docker-compose.yml up -d
 	@tail -f -n 0 ./logs/*.log
 
-run-debug: ## run istex-view in debug mode (regenerate the bundle.js if js are modified on fs)
+run-debug: ## run istex-view in debug mode (live regenerate the bundle.js if js are modified on fs)
 	@docker-compose -f ./docker-compose.debug.yml up
 
 # makefile rule used to keep current user's unix rights on the docker mounted files
