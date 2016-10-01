@@ -23,12 +23,9 @@ make run-prod
 
 ### How to generate a new istex-view version ?
 
-Just use npm stuff. Ex:
-```
-npm version patch
-```
+Just use npm stuff. Ex: ``npm version patch``
 
 ### How to upgrade libraries ?
 
-To check if a new version is available: ``bower list``
-To upgrade: ``bower update``
+- To check if a new version is available: ``bower list``
+- To upgrade: ``bower update``
