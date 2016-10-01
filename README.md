@@ -19,8 +19,16 @@ Web server redy for debugging is available at:
 make run-prod
 ```
 
-# Libs upgrade
+## How to for developers
+
+### How to generate a new istex-view version ?
+
+Just use npm stuff. Ex:
+```
+npm version patch
+```
+
+### How to upgrade libraries ?
 
 To check if a new version is available: ``bower list``
-
-Tu upgrade: ``bower update``
+To upgrade: ``bower update``
