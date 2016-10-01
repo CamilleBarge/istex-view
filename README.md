@@ -1,15 +1,17 @@
 # istex-view
 
-Visualisation interactive des documents ISTEX.
+Viewing enhanced ISTEX documents.
 
-## Développement
+## Development
 
 ```
 make install
 make run-debug
 ```
 
-Le serveur web prêt au debug sera accessible sur http://localhost:45445
+Web server redy for debugging is available at:
+- http://localhost:45445 (it will use nginx rewrite to be able to debug ARK stuff)
+- or at http://localhost:8080 (it will use the internal static nodejs server)
 
 ## Production
 
@@ -17,8 +19,8 @@ Le serveur web prêt au debug sera accessible sur http://localhost:45445
 make run-prod
 ```
 
-# Mise à jour des librairies
+# Libs upgrade
 
-Pour vérifier la disponibilités d'une nouvelle version : ``bower list``
+To check if a new version is available: ``bower list``
 
-Pour mettre à jour : ``bower update``
+Tu upgrade: ``bower update``
