@@ -1,6 +1,7 @@
 # istex-view
 
 Viewing enhanced ISTEX documents.
+(work in progress)
 
 ## Development
 
