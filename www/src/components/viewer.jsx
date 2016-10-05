@@ -1,14 +1,10 @@
-/**
- * @jsx React.DOM
- */
-
-var React  = require('react');
-var cookie = require('react-cookie');
-var PDF    = require('./react-pdf.js');
+import    React from 'react';
+import cookie   from 'react-cookie';
+import PDF      from './react-pdf.jsx';
 
 module.exports = React.createClass({
   displayName: 'Viewer',
-  getInitialState: function () {    
+  getInitialState: function () {
     return {
       currentPage: 2,
       pages: 0,
