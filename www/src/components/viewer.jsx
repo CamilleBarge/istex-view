@@ -4,6 +4,7 @@ import PDF      from './react-pdf.jsx';
 
 module.exports = React.createClass({
   displayName: 'Viewer',
+
   getInitialState: function () {
     return {
       currentPage: 2,
@@ -12,6 +13,28 @@ module.exports = React.createClass({
       istexToken: cookie.load('istexToken')
     };
   },
+
+  componentDidMount () {
+    // extract the ARK from the pathname in the URL
+    // ex: https://view.istex.fr/ark:/67375/ABC-123456
+    let ark = this.props.params.splat;
+
+    // // TODO: call the ark2istexid temporary web service
+    // //       to convert the ark to an istexId 
+    // fetch('https://ark-resolver.istex.fr/ark:/67375/ABC-123456', {
+    //   method: 'GET',
+    //   headers: {
+    //     Authorization: 'Bearer ' + this.state.istexToken
+    //   }
+    // }).then(function (response) {
+    //   return response.text();
+    // }).then(function (istexId) {
+    //   this.setState({istexId: istexId});
+    // });
+
+    this.setState({istexId: '195738F43F3FE6AD276CD8BAC3E554562B5BD60D'});
+  },
+
   prevPage: function (ev) {
     ev.preventDefault();
     this.setState({
@@ -30,6 +53,7 @@ module.exports = React.createClass({
     this.setState({istexId: event.target.value});
     cookie.save('istexId', event.target.value, { path: '/' });
   },
+
   render: function () {
     var pdfUrl = 'https://api-integ.istex.fr/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view';
     return (
@@ -53,4 +77,5 @@ module.exports = React.createClass({
   _onDocumentComplete: function (pages) {
     this.setState({pages: pages});
   }
+
 });
