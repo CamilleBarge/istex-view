@@ -28,7 +28,9 @@ run-prod: ## run istex-view in production mode
 	@tail -f -n 0 ./logs/*.log
 
 run-debug: ## run istex-view in debug mode (live regenerate the bundle.js if js are modified on fs)
-	@docker-compose -f ./docker-compose.debug.yml up
+	@docker-compose -f ./docker-compose.debug.yml up -d
+	@# attach to the istex-view-www container in order to be able to stop it easily with CTRL+C
+	@docker attach istex-view-www
 
 # makefile rule used to keep current user's unix rights on the docker mounted files
 chown:
