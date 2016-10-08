@@ -5,8 +5,9 @@
   "private": true,
   "scripts": {
     "watchify": "watchify -vd -p [ browserify-hmr -h 0.0.0.0 ] -e www/src/main.jsx -o www/dist/build.js",
-    "serve": "http-server -c 1 www/",
-    "dev": "npm-run-all --parallel watchify serve",
+    "serve": "http-server -s -c 1 www/",
+    "dev": "npm-run-all --parallel watchify serve help",
+    "help": "sleep 1 && echo '' && echo '\\033[107;33;7m --> Open \\033[1mhttp://127.0.0.1:45445\\033[0m\\033[107;33;7m in your browser. \\033[0m' && echo ''",
     "build": "cross-env NODE_ENV=production browserify -d -e www/src/main.jsx | uglifyjs -c warnings=false -m > www/dist/build.js",
     "lint": "eslint --ext .js,.jsx www/src",
     "version": "./tools/make-version",
@@ -49,6 +50,6 @@
     "npm-run-all": "3.1.0",
     "reactify": "1.1.1",
     "uglify-js": "2.7.3",
-    "watchify": "3.7.0"
+    "watchify": "^3.7.0"
   }
 }
