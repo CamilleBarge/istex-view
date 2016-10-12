@@ -17,7 +17,7 @@ RUN npm install
 COPY ./ngnix/prod.conf /etc/nginx/conf.d/default.conf
 
 # add source code (after npm install for docker build optimization reason)
-COPY ./www/ /usr/share/nginx/html/
+COPY ./www/ /usr/share/nginx/html/www/
 
 # build www/dist/bundle.js and www/dist/bundle.css for production
 RUN npm run build
