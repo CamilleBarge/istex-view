@@ -2348,6 +2348,7 @@ var PDFPageView = (function PDFPageViewClosure() {
     this.textLayerFactory = textLayerFactory;
     this.annotationLayerFactory = annotationLayerFactory;
 
+    this.renderTask = null;
     this.renderingState = RenderingStates.INITIAL;
     this.resume = null;
 
@@ -2391,11 +2392,7 @@ var PDFPageView = (function PDFPageViewClosure() {
     },
 
     reset: function PDFPageView_reset(keepZoomLayer, keepAnnotations) {
-      if (this.renderTask) {
-        this.renderTask.cancel();
-      }
-      this.resume = null;
-      this.renderingState = RenderingStates.INITIAL;
+      this.cancelRendering();
 
       var div = this.div;
       div.style.width = Math.floor(this.viewport.width) + 'px';
@@ -2479,6 +2476,20 @@ var PDFPageView = (function PDFPageViewClosure() {
         this.cssTransform(this.zoomLayer.firstChild);
       }
       this.reset(/* keepZoomLayer = */ true, /* keepAnnotations = */ true);
+    },
+
+    cancelRendering: function PDFPageView_cancelRendering() {
+      if (this.renderTask) {
+        this.renderTask.cancel();
+        this.renderTask = null;
+      }
+      this.renderingState = RenderingStates.INITIAL;
+      this.resume = null;
+
+      if (this.textLayer) {
+        this.textLayer.cancel();
+        this.textLayer = null;
+      }
     },
 
     /**
@@ -2576,6 +2587,7 @@ var PDFPageView = (function PDFPageViewClosure() {
     draw: function PDFPageView_draw() {
       if (this.renderingState !== RenderingStates.INITIAL) {
         console.error('Must be in new state before drawing');
+        this.reset(); // Ensure that we reset all state to prevent issues.
       }
 
       this.renderingState = RenderingStates.RUNNING;
@@ -2794,66 +2806,6 @@ var PDFPageView = (function PDFPageViewClosure() {
       }
       return promise;
     },
-
-    beforePrint: function PDFPageView_beforePrint(printContainer) {
-      var CustomStyle = pdfjsLib.CustomStyle;
-      var pdfPage = this.pdfPage;
-
-      var viewport = pdfPage.getViewport(1);
-      // Use the same hack we use for high dpi displays for printing to get
-      // better output until bug 811002 is fixed in FF.
-      var PRINT_OUTPUT_SCALE = 2;
-      var canvas = document.createElement('canvas');
-
-      // The logical size of the canvas.
-      canvas.width = Math.floor(viewport.width) * PRINT_OUTPUT_SCALE;
-      canvas.height = Math.floor(viewport.height) * PRINT_OUTPUT_SCALE;
-
-      // The rendered size of the canvas, relative to the size of canvasWrapper.
-      canvas.style.width = (PRINT_OUTPUT_SCALE * 100) + '%';
-
-      var cssScale = 'scale(' + (1 / PRINT_OUTPUT_SCALE) + ', ' +
-                                (1 / PRINT_OUTPUT_SCALE) + ')';
-      CustomStyle.setProp('transform' , canvas, cssScale);
-      CustomStyle.setProp('transformOrigin' , canvas, '0% 0%');
-
-      var canvasWrapper = document.createElement('div');
-      canvasWrapper.appendChild(canvas);
-      printContainer.appendChild(canvasWrapper);
-
-      canvas.mozPrintCallback = function(obj) {
-        var ctx = obj.context;
-
-        ctx.save();
-        ctx.fillStyle = 'rgb(255, 255, 255)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.restore();
-        // Used by the mozCurrentTransform polyfill in src/display/canvas.js.
-        ctx._transformMatrix =
-          [PRINT_OUTPUT_SCALE, 0, 0, PRINT_OUTPUT_SCALE, 0, 0];
-        ctx.scale(PRINT_OUTPUT_SCALE, PRINT_OUTPUT_SCALE);
-
-        var renderContext = {
-          canvasContext: ctx,
-          viewport: viewport,
-          intent: 'print'
-        };
-
-        pdfPage.render(renderContext).promise.then(function() {
-          // Tell the printEngine that rendering this canvas/page has finished.
-          obj.done();
-        }, function(error) {
-          console.error(error);
-          // Tell the printEngine that rendering this canvas/page has failed.
-          // This will make the print process stop.
-          if ('abort' in obj) {
-            obj.abort();
-          } else {
-            obj.done();
-          }
-        });
-      };
-    },
   };
 
   return PDFPageView;
@@ -2894,8 +2846,8 @@ var TextLayerBuilder = (function TextLayerBuilderClosure() {
   function TextLayerBuilder(options) {
     this.textLayerDiv = options.textLayerDiv;
     this.eventBus = options.eventBus || domEvents.getGlobalEventBus();
+    this.textContent = null;
     this.renderingDone = false;
-    this.divContentDone = false;
     this.pageIdx = options.pageIndex;
     this.pageNumber = this.pageIdx + 1;
     this.matches = [];
@@ -2908,6 +2860,9 @@ var TextLayerBuilder = (function TextLayerBuilderClosure() {
   }
 
   TextLayerBuilder.prototype = {
+    /**
+     * @private
+     */
     _finishRendering: function TextLayerBuilder_finishRendering() {
       this.renderingDone = true;
 
@@ -2919,7 +2874,8 @@ var TextLayerBuilder = (function TextLayerBuilderClosure() {
 
       this.eventBus.dispatch('textlayerrendered', {
         source: this,
-        pageNumber: this.pageNumber
+        pageNumber: this.pageNumber,
+        numTextDivs: this.textDivs.length,
       });
     },
 
@@ -2929,14 +2885,10 @@ var TextLayerBuilder = (function TextLayerBuilderClosure() {
      *   for specified amount of ms.
      */
     render: function TextLayerBuilder_render(timeout) {
-      if (!this.divContentDone || this.renderingDone) {
+      if (!this.textContent || this.renderingDone) {
         return;
       }
-
-      if (this.textLayerRenderTask) {
-        this.textLayerRenderTask.cancel();
-        this.textLayerRenderTask = null;
-      }
+      this.cancel();
 
       this.textDivs = [];
       var textLayerFrag = document.createDocumentFragment();
@@ -2953,17 +2905,23 @@ var TextLayerBuilder = (function TextLayerBuilderClosure() {
         this._finishRendering();
         this.updateMatches();
       }.bind(this), function (reason) {
-        // canceled or failed to render text layer -- skipping errors
+        // cancelled or failed to render text layer -- skipping errors
       });
     },
 
-    setTextContent: function TextLayerBuilder_setTextContent(textContent) {
+    /**
+     * Cancels rendering of the text layer.
+     */
+    cancel: function TextLayerBuilder_cancel() {
       if (this.textLayerRenderTask) {
         this.textLayerRenderTask.cancel();
         this.textLayerRenderTask = null;
       }
+    },
+
+    setTextContent: function TextLayerBuilder_setTextContent(textContent) {
+      this.cancel();
       this.textContent = textContent;
-      this.divContentDone = true;
     },
 
     convertMatches: function TextLayerBuilder_convertMatches(matches,
@@ -3166,6 +3124,7 @@ var TextLayerBuilder = (function TextLayerBuilderClosure() {
       var div = this.textLayerDiv;
       var self = this;
       var expandDivsTimer = null;
+
       div.addEventListener('mousedown', function (e) {
         if (self.enhanceTextSelection && self.textLayerRenderTask) {
           self.textLayerRenderTask.expandTextDivs(true);
@@ -3193,10 +3152,13 @@ var TextLayerBuilder = (function TextLayerBuilderClosure() {
         }
         end.classList.add('active');
       });
+
       div.addEventListener('mouseup', function (e) {
         if (self.enhanceTextSelection && self.textLayerRenderTask) {
           expandDivsTimer = setTimeout(function() {
-            self.textLayerRenderTask.expandTextDivs(false);
+            if (self.textLayerRenderTask) {
+              self.textLayerRenderTask.expandTextDivs(false);
+            }
             expandDivsTimer = null;
           }, EXPAND_DIVS_TIMEOUT);
           return;
@@ -3502,6 +3464,13 @@ var PDFViewer = (function pdfViewer() {
     },
 
     /**
+     * @returns {boolean} true if all {PDFPageView} objects are initialized.
+     */
+    get pageViewsReady() {
+      return this._pageViewsReady;
+    },
+
+    /**
      * @returns {number}
      */
     get currentPageNumber() {
@@ -3632,6 +3601,7 @@ var PDFViewer = (function pdfViewer() {
      */
     setDocument: function (pdfDocument) {
       if (this.pdfDocument) {
+        this._cancelRendering();
         this._resetView();
       }
 
@@ -3649,6 +3619,7 @@ var PDFViewer = (function pdfViewer() {
       });
       this.pagesPromise = pagesPromise;
       pagesPromise.then(function () {
+        self._pageViewsReady = true;
         self.eventBus.dispatch('pagesloaded', {
           source: self,
           pagesCount: pagesCount
@@ -3754,11 +3725,10 @@ var PDFViewer = (function pdfViewer() {
       this._location = null;
       this._pagesRotation = 0;
       this._pagesRequests = [];
+      this._pageViewsReady = false;
 
-      var container = this.viewer;
-      while (container.hasChildNodes()) {
-        container.removeChild(container.lastChild);
-      }
+      // Remove the pages from the DOM.
+      this.viewer.textContent = '';
     },
 
     _scrollUpdate: function PDFViewer_scrollUpdate() {
@@ -4132,6 +4102,17 @@ var PDFViewer = (function pdfViewer() {
     },
 
     /**
+     * @private
+     */
+    _cancelRendering: function PDFViewer_cancelRendering() {
+      for (var i = 0, ii = this._pages.length; i < ii; i++) {
+        if (this._pages[i]) {
+          this._pages[i].cancelRendering();
+        }
+      }
+    },
+
+    /**
      * @param {PDFPageView} pageView
      * @returns {PDFPage}
      * @private
@@ -4214,6 +4195,17 @@ var PDFViewer = (function pdfViewer() {
 
     setFindController: function (findController) {
       this.findController = findController;
+    },
+
+    /**
+     * Returns sizes of the pages.
+     * @returns {Array} Array of objects with width/height fields.
+     */
+    getPagesOverview: function () {
+      return this._pages.map(function (pageView) {
+        var viewport = pageView.pdfPage.getViewport(1);
+        return {width: viewport.width, height: viewport.height};
+      });
     },
   };
 
