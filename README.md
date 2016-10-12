@@ -14,6 +14,16 @@ Web server ready for debugging is available at:
 - http://localhost:45445 (it will use nginx rewrite to be able to debug ARK stuff)
 - or at http://localhost:8080 (it will use the internal static nodejs server)
 
+If you do not have docker, you can develop if you have installed nodejs locally (version >= 4.4.0). Then you just have to run: 
+
+```
+npm install
+npm run dev
+```
+
+Web server will then be ready for debugging only on the 8080 port:
+- http://localhost:8080 (it will use the internal static nodejs server)
+
 ## Production
 
 ```
