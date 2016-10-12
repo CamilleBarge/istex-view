@@ -67,12 +67,14 @@ var Pdf = React.createClass({
   },
   render: function() {
     var self = this;
-    if (!!this.state.page){
-      setTimeout(function() {
-        if(self.isMounted()){
+    if (!!this.state.page) {
+      setTimeout(function () {
+        if (self.isMounted()) {
+
+          // render the image layer of the PDF in a HTML5 canvas
           var canvas = ReactDOM.findDOMNode(self.refs.pdfCanvas),
-            context = canvas.getContext('2d'),
-            scale = self.props.scale,
+            context  = canvas.getContext('2d'),
+            scale    = self.props.scale,
             viewport = self.state.page.getViewport(scale);
           canvas.height = viewport.height;
           canvas.width = viewport.width;
@@ -80,10 +82,30 @@ var Pdf = React.createClass({
             canvasContext: context,
             viewport: viewport
           };
-          self.state.page.render(renderContext);
+          self.state.page.render(renderContext).then(function () {
+            // requests the PDF text content
+            return self.state.page.getTextContent();
+          }).then(function (textContent) {
+            // creates the text layer over the image layer on the HTMLized PDF
+            var textLayer = new PDFJS.TextLayerBuilder({
+              textLayerDiv: ReactDOM.findDOMNode(self.refs.textLayer),
+              pageIndex: self.state.page.pageIndex + 1,
+              viewport: viewport
+            });
+            textLayer.setTextContent(textContent);
+            textLayer.render();
+          });
         }
+
       });
-      return (React.createElement("canvas", {ref: "pdfCanvas"}));
+
+      // return a including div containing a canvas (for the pdf image) and a div (for the PDF text)
+      return (
+        <div className="react-pdf" style={{position:'relative'}}>
+          <canvas ref="pdfCanvas"></canvas>
+          <div className="textLayer" ref="textLayer"></div>
+        </div>
+      );
     }
     return (this.props.loading || React.createElement("div", null, "Loading pdf...."));
   },

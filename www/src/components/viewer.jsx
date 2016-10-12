@@ -7,7 +7,7 @@ module.exports = React.createClass({
 
   getInitialState: function () {
     return {
-      currentPage: 2,
+      currentPage: 1,
       pages: 0,
       istexId: (cookie.load('istexId') ? cookie.load('istexId') : '195738F43F3FE6AD276CD8BAC3E554562B5BD60D'),
       istexToken: cookie.load('istexToken')
@@ -63,14 +63,16 @@ module.exports = React.createClass({
         <br/>
         <input type="text" placeholder="ISTEX ID" style={{width:'100%'}}
                value={this.state.istexId} onChange={this.handleIstexIdChange} />
-        <PDF page={this.state.currentPage}
-             file={pdfUrl}
-             jwtToken={this.state.istexToken}
-             onDocumentComplete={this._onDocumentComplete} />
+
         <div>
           <button onClick={this.prevPage}>Previous page</button>
           <button onClick={this.nextPage}>Next page</button>
         </div>
+        
+        <PDF page={this.state.currentPage}
+             file={pdfUrl}
+             jwtToken={this.state.istexToken}
+             onDocumentComplete={this._onDocumentComplete} />
       </div>
     );
   },
