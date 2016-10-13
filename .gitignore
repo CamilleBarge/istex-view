@@ -24,3 +24,4 @@ npm-debug.log
 .~lock
 *.swn
 
+yarn.lock
