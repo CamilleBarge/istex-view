@@ -25,7 +25,7 @@ var Pdf = React.createClass({
     PDFJS.getDocument(byteArray).then(this._onDocumentComplete);
   },
   _loadPDFDocument: function(props) {
-    if(!!props.file){
+    if (props.file) {
       if (typeof props.file === 'string') {
         return PDFJS.getDocument({
           url: props.file,
@@ -41,7 +41,7 @@ var Pdf = React.createClass({
       };
       reader.readAsArrayBuffer(props.file);
     }
-    else if(!!props.content){
+    else if (props.content) {
       var bytes = window.atob(props.content);
       var byteLength = bytes.length;
       var byteArray = new Uint8Array(new ArrayBuffer(byteLength));

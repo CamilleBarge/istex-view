@@ -9,30 +9,24 @@ module.exports = React.createClass({
     return {
       currentPage: 1,
       pages: 0,
-      istexId: (cookie.load('istexId') ? cookie.load('istexId') : '195738F43F3FE6AD276CD8BAC3E554562B5BD60D'),
+      istexId: '',
       istexToken: cookie.load('istexToken')
     };
   },
 
   componentDidMount () {
+    let self = this;
+
     // extract the ARK from the pathname in the URL
     // ex: https://view.istex.fr/ark:/67375/ABC-123456
     let ark = this.props.params.splat;
 
-    // // TODO: call the ark2istexid temporary web service
-    // //       to convert the ark to an istexId 
-    // fetch('https://ark-resolver.istex.fr/ark:/67375/ABC-123456', {
-    //   method: 'GET',
-    //   headers: {
-    //     Authorization: 'Bearer ' + this.state.istexToken
-    //   }
-    // }).then(function (response) {
-    //   return response.text();
-    // }).then(function (istexId) {
-    //   this.setState({istexId: istexId});
-    // });
-
-    this.setState({istexId: '195738F43F3FE6AD276CD8BAC3E554562B5BD60D'});
+    // call istex-ark to convert the ark to an istexId 
+    fetch('http://127.0.0.1:3000/' + ark).then(function (response) {
+      return response.json();
+    }).then(function (arkResolved) {
+      self.setState({istexId: arkResolved.istexId});
+    });
   },
 
   prevPage: function (ev) {
@@ -51,11 +45,10 @@ module.exports = React.createClass({
   },
   handleIstexIdChange: function(event) {
     this.setState({istexId: event.target.value});
-    cookie.save('istexId', event.target.value, { path: '/' });
   },
 
   render: function () {
-    var pdfUrl = 'https://api-integ.istex.fr/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view';
+    var pdfUrl = this.state.istexId ? 'https://api.istex.fr/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view' : '';
     return (
       <div className="container">
         <input type="text" placeholder="ISTEX JWT token" style={{width:'100%'}}
