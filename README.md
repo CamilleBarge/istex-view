@@ -5,7 +5,18 @@ Viewing enhanced ISTEX documents.
 
 ## Development
 
+Prerequisite is to have a local running [istex-ark](https://github.com/istex/istex-ark):
 ```
+git clone https://github.com/istex/istex-ark
+cd istex-ark
+make install
+make run-debug
+```
+
+Then open another termila and run [istex-view](https://github.com/istex/istex-view):
+```
+git clone https://github.com/istex/istex-view
+cd istex-view
 make install
 make run-debug
 ```
@@ -17,6 +28,7 @@ Web server ready for debugging is available at:
 If you do not have docker, you can develop if you have installed nodejs locally (version >= 4.4.0). Then you just have to run: 
 
 ```
+echo 'module.exports = { istexArkUrl: "http://127.0.0.1:3000" };' > ./www/src/config.local.js
 npm install
 npm run dev
 ```
