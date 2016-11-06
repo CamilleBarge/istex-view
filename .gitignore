@@ -2,6 +2,7 @@
 node_modules
 www/dist/*.js
 www/dist/*.css
+www/src/config.local.js
 token.txt
 tmp/
 

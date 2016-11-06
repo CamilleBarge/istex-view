@@ -1,6 +1,7 @@
 import    React from 'react';
 import cookie   from 'react-cookie';
 import PDF      from './react-pdf.jsx';
+import config   from '../config.js';
 
 module.exports = React.createClass({
   displayName: 'Viewer',
@@ -22,7 +23,7 @@ module.exports = React.createClass({
     let ark = this.props.params.splat;
 
     // call istex-ark to convert the ark to an istexId 
-    fetch('http://127.0.0.1:3000/' + ark).then(function (response) {
+    fetch(config.istexArkUrl + '/' + ark).then(function (response) {
       return response.json();
     }).then(function (arkResolved) {
       self.setState({istexId: arkResolved.istexId});
@@ -48,7 +49,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var pdfUrl = this.state.istexId ? 'https://api.istex.fr/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view' : '';
+    var pdfUrl = this.state.istexId ? config.istexApiUrl + '/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view' : '';
     return (
       <div className="container">
         <input type="text" placeholder="ISTEX JWT token" style={{width:'100%'}}

@@ -24,10 +24,12 @@ build: ## build the docker istex/istex-view image locally
 	@docker build -t istex/istex-view --build-arg http_proxy --build-arg https_proxy .
 
 run-prod: ## run istex-view in production mode
+	@echo 'module.exports = {};' > ./www/src/config.local.js
 	@docker-compose -f ./docker-compose.yml up -d
 	@tail -f -n 0 ./logs/*.log
 
 run-debug: ## run istex-view in debug mode (live regenerate the bundle.js if js are modified on fs)
+	@echo 'module.exports = { istexArkUrl: "http://127.0.0.1:3000" };' > ./www/src/config.local.js
 	@docker-compose -f ./docker-compose.debug.yml up -d
 	@docker restart istex-view-rp
 	@# attach to the istex-view-www container in order to be able to stop it easily with CTRL+C
