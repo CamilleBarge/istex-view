@@ -13,7 +13,10 @@
     "build-js": "NODE_ENV=production browserify -d www/src/main.jsx -p [minifyify --no-map] > www/dist/bundle.js",
     "build-css": "lessc --clean-css='--compatibility=ie8 --advanced' www/less/*.less > www/dist/bundle.css",
     "lint": "eslint --ext .js,.jsx www/src",
-    "version": "./tools/make-version",
+    "inservversion:readme": "sed -i \"s#\\(istex/istex-view:\\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" README.md",
+    "insertversion:docker-compose": "sed -i \"s#\\(image: istex/istex-ark:\\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" docker-compose.yml",
+    "preversion": "npm run lint",
+    "version": "npm run inservversion:readme && npm run inservversion:docker-compose && git add docker-compose.yml README.md",
     "postversion": "git push && git push --tags"
   },
   "browserify": {
