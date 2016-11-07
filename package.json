@@ -15,7 +15,7 @@
     "lint": "eslint --ext .js,.jsx www/src",
     "inservversion:readme": "sed -i \"s#\\(istex/istex-view:\\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" README.md",
     "insertversion:docker-compose": "sed -i \"s#\\(image: istex/istex-ark:\\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" docker-compose.yml",
-    "preversion": "npm run lint",
+    "preversion": "#npm run lint",
     "version": "npm run inservversion:readme && npm run inservversion:docker-compose && git add docker-compose.yml README.md",
     "postversion": "git push && git push --tags"
   },
