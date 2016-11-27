@@ -1,4 +1,5 @@
 import    React from 'react';
+import    IstexArkStatus from './istex-ark-status.jsx';
 
 module.exports = React.createClass({
   displayName: 'Home',
@@ -25,8 +26,7 @@ module.exports = React.createClass({
             <li role="presentation"><a href="https://github.com/istex/istex-view">Code source</a></li>
           </ul>
         </nav>
-
-
+        
         <h3 className="text-muted">ISTEX VIEW</h3>
       </div>
 
@@ -38,6 +38,8 @@ module.exports = React.createClass({
           Ci-dessous la liste des documents ISTEX proposés dans ce prototype qui propose un service de références bibliographiques interactives au survol de la souris.
         </p>
       </div>
+
+      <IstexArkStatus />
 
       <p>
         {arks.map((ark) =>

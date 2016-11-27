@@ -2,6 +2,7 @@ import    React from 'react';
 import cookie   from 'react-cookie';
 import PDF      from './react-pdf.jsx';
 import config   from '../config.js';
+import IstexArkStatus from './istex-ark-status.jsx';
 
 module.exports = React.createClass({
   displayName: 'Viewer',
@@ -52,6 +53,8 @@ module.exports = React.createClass({
     var pdfUrl = this.state.istexId ? config.istexApiUrl + '/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view' : '';
     return (
       <div className="container">
+        <IstexArkStatus />
+        
         <input type="text" placeholder="ISTEX JWT token" style={{width:'100%'}}
                value={this.state.istexToken} onChange={this.handleIstexTokenChange} />
         <br/>
