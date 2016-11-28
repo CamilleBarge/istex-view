@@ -18,7 +18,17 @@ COPY ./ngnix/prod.conf /etc/nginx/conf.d/default.conf
 
 # add source code (after npm install for docker build optimization reason)
 COPY ./www/ /usr/share/nginx/html/www/
-RUN echo 'module.exports = {};' > /usr/share/nginx/html/www/src/config.local.js
+RUN echo '{ \
+  "istexApiUrl": "https://api.istex.fr", \
+  "istexArkUrl": "https://ark.istex.fr" \
+}' > /usr/share/nginx/html/www/src/config.local.json
+
+# ezmasterization of istex-view
+# see https://github.com/Inist-CNRS/ezmaster
+RUN echo '{ \
+  "httpPort": 80, \
+  "configPath": "/usr/share/nginx/html/www/src/config.local.json" \
+}' > /etc/ezmaster.json
 
 # build www/dist/bundle.js and www/dist/bundle.css for production
 RUN npm run build
