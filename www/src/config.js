@@ -3,7 +3,7 @@ const defaultConfig = {
   istexArkUrl: 'https://ark.istex.fr'
 };
 
-const localConfig = require('./config.local.js');
+const localConfig = require('./config.local.json');
 
 module.exports = {
   ...defaultConfig,

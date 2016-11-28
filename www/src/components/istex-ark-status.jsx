@@ -6,7 +6,7 @@ module.exports = React.createClass({
 
   getInitialState: function () {
     return {
-      // do not show warning as long as the ajax 
+      // do not show warning as long as the ajax
       // request is not finished
       isAvailable: true
     };
@@ -17,11 +17,9 @@ module.exports = React.createClass({
 
     // call istex-ark to check if the server is ready
     fetch(config.istexArkUrl + '/index.json').then(function (response) {
-console.log('TRRRRRRRRRRUE')
       self.setState({isAvailable: true});
     }).catch(function (err) {
-console.log('ERRRRRRRRRor', err)
-      self.setState({isAvailable: false});      
+      self.setState({isAvailable: false});
     });
   },
 
@@ -30,7 +28,7 @@ console.log('ERRRRRRRRRor', err)
     if (!self.state.isAvailable) {
       return (
         <div className="alert alert-danger" role="alert">
-          Istex-ARK server is not listening. Please start it to be able to view ISTEX documents. 
+          Istex-ARK server is not listening. Please start it to be able to view ISTEX documents.
         </div>
       );
     } else {
