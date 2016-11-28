@@ -1,5 +1,9 @@
 # istex-view
 
+[![Docker stars](https://img.shields.io/docker/stars/istex/istex-view.svg)](https://registry.hub.docker.com/u/istex/istex-view/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/istex/istex-view.svg)](https://registry.hub.docker.com/u/istex/istex-view/)
+
+
 Viewing enhanced ISTEX documents.
 (work in progress)
 
