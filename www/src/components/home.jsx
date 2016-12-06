@@ -33,7 +33,7 @@ module.exports = React.createClass({
       <div className="jumbotron">
         <h1>Visualisation interactive des documents ISTEX</h1>
         <p className="lead">
-          ISTEX VIEW c'est une page HTML5 par document ISTEX. Chaque page permet de visualiser le document PDF augmenté d'interactivités contextuelles de type survol de la souris ou autre. Chaque page est citable via une URL de type ARK (ex : <a href="/ark:/12345/X01-38XC4LP5-7">https://view.istex.fr/ark:/12345/X01-38XC4LP5-7</a>)
+          ISTEX VIEW c'est une page HTML5 par objet documentaire ISTEX. Chaque page permet de visualiser le document PDF augmenté d'interactivités contextuelles de type survol de la souris ou autre. Chaque page est citable via une URL de type ARK (ex : <a href="/ark:/12345/X01-38XC4LP5-7">https://view.istex.fr/ark:/12345/X01-38XC4LP5-7</a>)
           <br/><br/>
           Ci-dessous la liste des documents ISTEX proposés dans ce prototype qui propose un service de références bibliographiques interactives au survol de la souris.
         </p>
