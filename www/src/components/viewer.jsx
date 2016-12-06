@@ -1,7 +1,6 @@
 import    React from 'react';
 import cookie   from 'react-cookie';
 import PDF      from './react-pdf.jsx';
-import config   from '../config.js';
 import IstexArkStatus from './istex-ark-status.jsx';
 
 module.exports = React.createClass({
@@ -23,12 +22,22 @@ module.exports = React.createClass({
     // ex: https://view.istex.fr/ark:/67375/ABC-123456
     let ark = this.props.params.splat;
 
-    // call istex-ark to convert the ark to an istexId 
-    fetch(config.istexArkUrl + '/' + ark).then(function (response) {
+    // request the istex-view config
+    fetch('/config.json').then(function (response) {
       return response.json();
-    }).then(function (arkResolved) {
-      self.setState({istexId: arkResolved.istexId});
+    }).then(function (config) {
+      self.config = config;
+
+      // call istex-ark to convert the ark to an istexId 
+      fetch(self.config.istexArkUrl + '/' + ark).then(function (response) {
+        return response.json();
+      }).then(function (arkResolved) {
+        self.setState({istexId: arkResolved.istexId});
+      });
+
     });
+
+
   },
 
   prevPage: function (ev) {
@@ -50,7 +59,8 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var pdfUrl = this.state.istexId ? config.istexApiUrl + '/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view' : '';
+    let self = this;
+    var pdfUrl = this.state.istexId ? self.config.istexApiUrl + '/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view' : '';
     return (
       <div className="container">
         <IstexArkStatus />

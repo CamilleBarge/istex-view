@@ -21,13 +21,13 @@ COPY ./www/ /usr/share/nginx/html/www/
 RUN echo '{ \
   "istexApiUrl": "https://api.istex.fr", \
   "istexArkUrl": "https://ark.istex.fr" \
-}' > /usr/share/nginx/html/www/src/config.local.json
+}' > /usr/share/nginx/html/www/config.json
 
 # ezmasterization of istex-view
 # see https://github.com/Inist-CNRS/ezmaster
 RUN echo '{ \
   "httpPort": 80, \
-  "configPath": "/usr/share/nginx/html/www/src/config.local.json" \
+  "configPath": "/usr/share/nginx/html/www/config.json" \
 }' > /etc/ezmaster.json
 
 # build www/dist/bundle.js and www/dist/bundle.css for production
