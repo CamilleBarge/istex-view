@@ -1,4 +1,4 @@
 {
   "istexApiUrl": "https://api.istex.fr",
-  "istexArkUrl": "https://ark.istex.fr"
+  "istexArkUrl": "http://127.0.0.1:3000"
 }
