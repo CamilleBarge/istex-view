@@ -15,7 +15,7 @@ services:
 
   istex-view-www:
     container_name: istex-view-www
-    image: node:4.4.0
+    image: node:6.9.1
     working_dir: /app
     volumes:
       - .:/app
