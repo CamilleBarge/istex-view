@@ -5,7 +5,7 @@ import IstexArkStatus from './istex-ark-status.jsx';
 import IstexApiStatus from './istex-api-status.jsx';
 
 module.exports = React.createClass({
-  displayName: 'Viewer',
+  displayName: 'ViewDoc',
 
   getInitialState: function () {
     return {
