@@ -1,7 +1,6 @@
 import    React from 'react';
 import cookie   from 'react-cookie';
 import PDF      from './react-pdf.jsx';
-import IstexArkStatus from './istex-ark-status.jsx';
 import IstexApiStatus from './istex-api-status.jsx';
 
 module.exports = React.createClass({
@@ -20,24 +19,12 @@ module.exports = React.createClass({
     let self = this;
 
 
-    // // extract the ARK from the pathname in the URL
-    // // ex: https://view.istex.fr/ark:/67375/ABC-123456
-    // let ark = this.props.params.splat;
-
     // request the istex-view config
     fetch('/config.json').then(function (response) {
       return response.json();
     }).then(function (config) {
       self.config = config;
-
-      // // call istex-ark to convert the ark to an istexId 
-      // fetch(self.config.istexArkUrl + '/' + ark).then(function (response) {
-      //   return response.json();
-      // }).then(function (arkResolved) {
-      //   self.setState({istexId: arkResolved.istexId});
-      // });
       self.setState({istexId: self.props.params.splat});
-
     });
 
 
@@ -67,7 +54,6 @@ module.exports = React.createClass({
     var pdfUrl = this.state.istexId ? self.config.istexApiUrl + '/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view' : '';
     return (
       <div className="container">
-        <IstexArkStatus />
         <IstexApiStatus />
                 
         <PDF page={this.state.currentPage}
