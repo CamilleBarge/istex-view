@@ -46,7 +46,7 @@ module.exports = React.createClass({
       <div className="container">
         <IstexApiStatus />
 
-        <h1>Accéder aux documents ISTEX par OpenURL</h1>
+        <h1>Accéder aux ressources ISTEX par OpenURL</h1>
 
         <a style={{display: self.state.resourceUrl ? 'block' : 'none'}} href={self.state.resourceUrl}>Accéder au document PDF</a>
         <p style={{display: self.state.resourceUrl ? 'none' : 'block'}}>Document introuvable dans la plateforme ISTEX</p>
