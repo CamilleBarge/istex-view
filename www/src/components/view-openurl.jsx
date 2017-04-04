@@ -1,5 +1,6 @@
 import    React from 'react';
 import cookie   from 'react-cookie';
+import qs       from 'querystring';
 import IstexApiStatus from './istex-api-status.jsx';
 
 module.exports = React.createClass({
@@ -22,11 +23,13 @@ module.exports = React.createClass({
 
       // ask istex api about the requested document
       // ex: https://api.istex.fr/document/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&noredirect
-      let theOpenUrl = self.config.istexApiUrl + '/document/openurl' + self.props.location.search;
-      if (self.props.location.search && self.props.location.search.indexOf('&noredirect') === -1) {
-        theOpenUrl += '&noredirect';
+      if (self.props.location.query.sid) {
+        self.props.location.query.sid += ',istex-view'
+      } else {
+        self.props.location.query.sid = 'istex-view'
       }
-      // TODO: add sid=istex-view (concatenated to the maybe existing sid)
+      self.props.location.query.noredirect = true;
+      let theOpenUrl = self.config.istexApiUrl + '/document/openurl?' + qs.stringify(self.props.location.query);
       fetch(theOpenUrl).then(function (response) {
         return response.json();
       }).then(function (openUrlRes) {
