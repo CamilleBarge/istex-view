@@ -20,7 +20,7 @@ module.exports = React.createClass({
     }).then(function (config) {
 
       // call istex-api to check if the server is ready
-      fetch(config.istexApiUrl + '/document/?q=*&output=id&sid=istex-view').then(function (response) {
+      fetch(config.istexApiUrl + '/document/?q=*&output=id,ark&sid=istex-view').then(function (response) {
         self.setState({isAvailable: true});
       }).catch(function (err) {
         self.setState({isAvailable: false});

@@ -14,7 +14,7 @@ module.exports = React.createClass({
 
   render: function () {
     let self = this;
-    var arks = self.state.arks;
+    var arks = self.state.istexIds;
 
     // var arks = [
     //   'ark:/12345/X04-NLP74VSW-8', // 1A9EA12F2FE30BF2CFE9C45932AACC6F32A61F4F
