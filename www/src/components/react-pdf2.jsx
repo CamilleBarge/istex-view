@@ -1,5 +1,5 @@
 import    React from 'react';
-//import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom';
 
 const PDF_URL = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf'
 
@@ -70,11 +70,12 @@ class Page extends React.Component {
   } 
   _renderPage (page) {
     var self = this;
-    console.log(page)
+    //console.log(page)
+
     let { scale } = this.context 
 //    let viewport = page.getViewport(scale)
     let canvas = this.refs.canvas
-    let viewport = page.getViewport((document.getElementById('istex-viewer').clientWidth-82) / page.getViewport(1.0).width);
+    let viewport = page.getViewport((ReactDOM.findDOMNode(this).parentNode.clientWidth-82) / page.getViewport(1.0).width);
     let { width, height } = viewport
     let context = canvas.getContext('2d')
     console.log(viewport.height, viewport.width)
