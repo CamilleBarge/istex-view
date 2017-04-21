@@ -49,13 +49,13 @@ module.exports = React.createClass({
         </p>
 
         <p>
-          ISTEX VIEW permet l'accès à tous les documents présents dans la plateforme ISTEX. Ci-dessous ne sont listés que quelques documents présents dans la plateforme ISTEX à titre d'exemple.
+          ISTEX VIEW permet l'accès à tous les documents présents dans la plateforme ISTEX. Ci-dessous, à titre d'exemple, ne sont listés que 15 documents tirés au hasard depuis la plateforme ISTEX .
         </p>
       </div>
 
       <IstexApiStatus />
 
-      <p>
+      <p className="iv-demo-doc-container">
         {istexIds.map((istexid) =>
           <a href={'/' + istexid}  className="btn btn-default btn-lg iv-demo-doc" role="button">
             <span className="glyphicon glyphicon-book" aria-hidden="true"></span> <code>{istexid}</code>
@@ -86,7 +86,7 @@ module.exports = React.createClass({
 
       // fetch the first 10 istex documents and
       // extract the ARKs and the istexIds
-      fetch(config.istexApiUrl + '/document/?q=*&output=id,ark&sid=istex-view').then(function (response) {
+      fetch(config.istexApiUrl + '/document/?q=*&output=id,ark&sid=istex-view&size=15&rankBy=random').then(function (response) {
         return response.json();
       }).then(function (apiJson) {
         var arks = apiJson.hits.map(function (hit) {
