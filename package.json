@@ -8,7 +8,7 @@
     "watch-less": "watch 'lessc www/less/*.less > www/dist/bundle.css && echo \"-> bundle.css written\"' ./www/less/",
     "serve": "http-server -p 8080 -s -c 1 www/",
     "dev": "npm-run-all --parallel watch-js watch-less serve help",
-    "help": "sleep 1 && echo '' && echo '\\033[107;33;7m --> Open \\033[1mhttp://127.0.0.1:45445\\033[0m\\033[107;33;7m in your browser for testing through Nginx (needed for ARK). \\033[0m' && echo '\\033[107;33;7m --> Open \\033[1mhttp://127.0.0.1:8080\\033[0m\\033[107;33;7m in your browser for testing just with http-server. \\033[0m' && echo ''",
+    "help": "sleep 1 && echo '' && echo '\\033[107;33;7m --> Open \\033[1mhttp://127.0.0.1:45445\\033[0m\\033[107;33;7m in your browser for testing (through Nginx). \\033[0m'",
     "build": "npm run build-js && npm run build-css",
     "build-js": "NODE_ENV=production browserify -d www/src/main.jsx -p [minifyify --no-map] > www/dist/bundle.js",
     "build-css": "lessc --clean-css='--compatibility=ie8 --advanced' www/less/*.less > www/dist/bundle.css",

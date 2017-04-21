@@ -9,15 +9,8 @@ Viewing enhanced ISTEX ressources.
 
 ## Development
 
-Prerequisite is to have a local running [istex-ark](https://github.com/istex/istex-ark):
-```
-git clone https://github.com/istex/istex-ark
-cd istex-ark
-make install
-make run-debug
-```
 
-Then open another termila and run [istex-view](https://github.com/istex/istex-view):
+Open a terminal and run [istex-view](https://github.com/istex/istex-view):
 ```
 git clone https://github.com/istex/istex-view
 cd istex-view
@@ -25,20 +18,7 @@ make install
 make run-debug
 ```
 
-Web server ready for debugging is available at:
-- http://localhost:45445 (it will use nginx rewrite to be able to debug ARK stuff)
-- or at http://localhost:8080 (it will use the internal static nodejs server)
-
-If you do not have docker, you can develop if you have installed nodejs locally (version >= 4.4.0). Then you just have to run: 
-
-```
-echo 'module.exports = { istexArkUrl: "http://127.0.0.1:3000" };' > ./www/src/config.local.js
-npm install
-npm run dev
-```
-
-Web server will then be ready for debugging only on the 8080 port:
-- http://localhost:8080 (it will use the internal static nodejs server)
+Then web server ready for debugging is available at: http://localhost:45445
 
 ## Production
 
