@@ -1,6 +1,6 @@
 import    React from 'react';
 import cookie   from 'react-cookie';
-import Pdf       from './react-pdf.jsx';
+import {PDF, Viewer} from './react-pdf2.jsx';
 import IstexApiStatus from './istex-api-status.jsx';
 
 module.exports = React.createClass({
@@ -17,7 +17,6 @@ module.exports = React.createClass({
 
   componentDidMount () {
     let self = this;
-
 
     // request the istex-view config
     fetch('/config.json').then(function (response) {
@@ -51,27 +50,35 @@ module.exports = React.createClass({
   render: function () {
     let self = this;
 
-    var pdfUrl = this.state.istexId ? self.config.istexApiUrl + '/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view' : '';
-    return (
-      <div className="container">
-        <IstexApiStatus />
-                
+    var pdfUrl = self.state.istexId ? self.config.istexApiUrl + '/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view' : '';
+console.log('PDFURL', self.state.istexId, pdfUrl)
+
+    var ReactPdf2 = pdfUrl ? (
+      <PDF src={pdfUrl} jwtToken={this.state.istexToken}>
+        <Viewer />
+      </PDF>
+    ) : null;
+
+/*
         <Pdf page={this.state.currentPage}
              file={pdfUrl}
              jwtToken={this.state.istexToken}
              onDocumentComplete={this._onDocumentComplete} />
-
-        <div>
-          <button onClick={this.prevPage}>Previous page</button>
-          <button onClick={this.nextPage}>Next page</button>
+*/
+    return (
+      <div className="iv-doc-container">
+        
+        <div style={{textAlign: 'center'}}>
+          <img src="/images/istex-logo-150.png" alt="" />
         </div>
+
+        {ReactPdf2}
+
+        <IstexApiStatus />
 
         <hr/>
         <input type="text" placeholder="ISTEX JWT token" style={{width:'100%'}}
                value={this.state.istexToken} onChange={this.handleIstexTokenChange} />
-        <br/>
-        <input type="text" placeholder="ISTEX ID" style={{width:'100%'}}
-               value={this.state.istexId} onChange={this.handleIstexIdChange} />
       </div>
     );
   },
