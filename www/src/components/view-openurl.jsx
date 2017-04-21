@@ -72,9 +72,9 @@ module.exports = React.createClass({
             </button>            
           </a>
           <p style={{display: self.state.resourceUrl ? 'none' : 'block'}}>
-            <button type="button" className="btn btn-default" aria-label="Left Align">
+            <div className="alert alert-warning" role="alert" >
               <span className="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Document introuvable dans la plateforme ISTEX
-            </button>            
+            </div>
           </p>
         </div>
 

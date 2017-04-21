@@ -1,6 +1,6 @@
 import    React from 'react';
 import cookie   from 'react-cookie';
-import PDF      from './react-pdf.jsx';
+import Pdf       from './react-pdf.jsx';
 import IstexApiStatus from './istex-api-status.jsx';
 
 module.exports = React.createClass({
@@ -56,7 +56,7 @@ module.exports = React.createClass({
       <div className="container">
         <IstexApiStatus />
                 
-        <PDF page={this.state.currentPage}
+        <Pdf page={this.state.currentPage}
              file={pdfUrl}
              jwtToken={this.state.istexToken}
              onDocumentComplete={this._onDocumentComplete} />
