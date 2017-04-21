@@ -37,7 +37,7 @@ module.exports = React.createClass({
           ISTEX VIEW c'est une page HTML5 par objet documentaire ISTEX. Chaque page permet de visualiser le document PDF augmenté d'interactivités contextuelles de type survol de la souris ou autre. Chaque page pointe vers un objet documentaire ISTEX. Exemple : <a href="/4B64F4937471EA91F40AABC46B2D4CD5D5CC304E">https://view.istex.fr/4B64F4937471EA91F40AABC46B2D4CD5D5CC304E</a><br/>(les ARK seront prochainement supportés)
         </p>
         <p className="lead">
-          ISTEX VIEW c'est aussi une interface HTML au dessus de l'OpenURL de l'API ISTEX. Exemple: <a href="/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183">https://view.istex.fr/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183</a>
+          ISTEX VIEW c'est aussi une interface HTML au dessus de l'OpenURL de l'API ISTEX. Exemple: <a href="/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&amp;noredirect">https://view.istex.fr/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&amp;noredirect</a>
         </p>        
       </div>
 

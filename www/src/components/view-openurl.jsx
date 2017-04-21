@@ -8,7 +8,8 @@ module.exports = React.createClass({
 
   getInitialState: function () {
     return {
-      resourceUrl: ''
+      resourceUrl: null,
+      loading: true
     };
   },
 
@@ -28,12 +29,26 @@ module.exports = React.createClass({
       } else {
         self.props.location.query.sid = 'istex-view'
       }
-      self.props.location.query.noredirect = true;
-      let theOpenUrl = self.config.istexApiUrl + '/document/openurl?' + qs.stringify(self.props.location.query);
+      let theOpenUrl = self.config.istexApiUrl + '/document/openurl?' + qs.stringify(Object.assign({}, self.props.location.query, { noredirect: true }));
       fetch(theOpenUrl).then(function (response) {
         return response.json();
       }).then(function (openUrlRes) {
-        self.setState({ resourceUrl: openUrlRes.resourceUrl });
+        if (self.props.location.query.noredirect !== undefined) {
+          self.setState({
+            resourceUrl: self.mapApiUrlToViewUrl(openUrlRes.resourceUrl),
+            loading: false
+          });
+        } else {
+          self.setState({
+            loading: false,
+          });
+          window.location = self.mapApiUrlToViewUrl(openUrlRes.resourceUrl);
+        }
+      }).catch(function (err) {
+          self.setState({
+            loading: false,
+            resourceUrl: ''
+          });
       });
       
     });
@@ -46,13 +61,34 @@ module.exports = React.createClass({
       <div className="container">
         <IstexApiStatus />
 
-        <h1>Accéder aux ressources ISTEX par OpenURL</h1>
+        <div className="alert alert-info iv-loading-openurl" role="alert" style={{display: self.state.loading ? 'block' : 'none'}}>Chargement en cours...</div>
 
-        <a style={{display: self.state.resourceUrl ? 'block' : 'none'}} href={self.state.resourceUrl}>Accéder au document PDF</a>
-        <p style={{display: self.state.resourceUrl ? 'none' : 'block'}}>Document introuvable dans la plateforme ISTEX</p>
+        <div style={{display: self.state.resourceUrl === null ? 'none' : 'block'}}>
+          <h1>Accéder aux ressources ISTEX par OpenURL</h1>
+
+          <a style={{display: self.state.resourceUrl ? 'block' : 'none'}} href={self.state.resourceUrl}>
+            <button type="button" className="btn btn-default" aria-label="Left Align">
+              <span className="glyphicon glyphicon-book" aria-hidden="true"></span> Accéder au document
+            </button>            
+          </a>
+          <p style={{display: self.state.resourceUrl ? 'none' : 'block'}}>
+            <button type="button" className="btn btn-default" aria-label="Left Align">
+              <span className="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Document introuvable dans la plateforme ISTEX
+            </button>            
+          </p>
+        </div>
 
       </div>
     );
   },
+
+  mapApiUrlToViewUrl: function (apiUrl) {
+    var matches = apiUrl.match(new RegExp('api\.istex\.fr\/document\/([A-Z0-9]{40})\/'));
+    if (matches) {
+      return '/' + matches[1];
+    } else {
+      return '';
+    }
+  }
 
 });
