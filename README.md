@@ -4,7 +4,7 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/istex/istex-view.svg)](https://registry.hub.docker.com/u/istex/istex-view/)
 
 
-Viewing enhanced ISTEX documents.
+Viewing enhanced ISTEX ressources.
 (work in progress)
 
 ## Development
