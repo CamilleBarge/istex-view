@@ -1,10 +1,6 @@
 import    React from 'react';
 import cookie   from 'react-cookie';
-import IstexApiDocRecord from './istex-api-doc-record.jsx';
-import Pdf       from './react-pdf.jsx';
-var Pdf2    = require('./react-pdf2.jsx').PDF;
-var Viewer2 = require('./react-pdf2.jsx').Viewer;
-//, Viewer2}      from './react-pdf2.jsx';
+import {PDF, Viewer} from './react-pdf2.jsx';
 import IstexApiStatus from './istex-api-status.jsx';
 
 module.exports = React.createClass({
@@ -21,7 +17,6 @@ module.exports = React.createClass({
 
   componentDidMount () {
     let self = this;
-
 
     // request the istex-view config
     fetch('/config.json').then(function (response) {
@@ -55,35 +50,35 @@ module.exports = React.createClass({
   render: function () {
     let self = this;
 
-    var docRecord = self.state.istexId ? <IstexApiDocRecord istexId={self.state.istexId} /> : null;
+    var pdfUrl = self.state.istexId ? self.config.istexApiUrl + '/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view' : '';
+console.log('PDFURL', self.state.istexId, pdfUrl)
 
-    var pdfUrl = this.state.istexId ? self.config.istexApiUrl + '/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view' : '';
+    var ReactPdf2 = pdfUrl ? (
+      <PDF src={pdfUrl} jwtToken={this.state.istexToken}>
+        <Viewer />
+      </PDF>
+    ) : null;
 
 /*
-
         <Pdf page={this.state.currentPage}
              file={pdfUrl}
              jwtToken={this.state.istexToken}
              onDocumentComplete={this._onDocumentComplete} />
 */
-    const PDF_URL = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf';
-
     return (
       <div className="iv-doc-container">
+        
+        <div style={{textAlign: 'center'}}>
+          <img src="/images/istex-logo-150.png" alt="" />
+        </div>
+
+        {ReactPdf2}
+
         <IstexApiStatus />
-
-        {docRecord}
-
-        <Pdf2 src={PDF_URL}>
-          <Viewer2 />
-        </Pdf2>
 
         <hr/>
         <input type="text" placeholder="ISTEX JWT token" style={{width:'100%'}}
                value={this.state.istexToken} onChange={this.handleIstexTokenChange} />
-        <br/>
-        <input type="text" placeholder="ISTEX ID" style={{width:'100%'}}
-               value={this.state.istexId} onChange={this.handleIstexIdChange} />
       </div>
     );
   },

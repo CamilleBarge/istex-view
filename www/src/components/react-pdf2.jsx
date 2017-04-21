@@ -1,8 +1,6 @@
 import    React from 'react';
 import ReactDOM from 'react-dom';
 
-const PDF_URL = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf'
-
 class PDF extends React.Component {
   constructor (props) {
     super(props)
@@ -18,8 +16,12 @@ class PDF extends React.Component {
     }
   }
   componentDidMount () {
-    PDFJS.getDocument(this.props.src).then((pdf) => {
-      console.log(pdf)
+    PDFJS.getDocument({
+      url: this.props.src,
+      httpHeaders: {
+        Authorization: 'Bearer ' + this.props.jwtToken
+      }
+    }).then((pdf) => {
       this.setState({ pdf })
     })
   }
@@ -29,7 +31,8 @@ class PDF extends React.Component {
 }
 
 PDF.propTypes = {
-  src: React.PropTypes.string.isRequired
+  src: React.PropTypes.string.isRequired,
+  jwtToken: React.PropTypes.string
 }
 
 PDF.childContextTypes = {
@@ -70,7 +73,6 @@ class Page extends React.Component {
   } 
   _renderPage (page) {
     var self = this;
-    //console.log(page)
 
     let { scale } = this.context 
 //    let viewport = page.getViewport(scale)
@@ -78,7 +80,6 @@ class Page extends React.Component {
     let viewport = page.getViewport((ReactDOM.findDOMNode(this).parentNode.clientWidth-82) / page.getViewport(1.0).width);
     let { width, height } = viewport
     let context = canvas.getContext('2d')
-    console.log(viewport.height, viewport.width)
     canvas.width = width
     canvas.height = height
     
