@@ -2,12 +2,14 @@ import    React from 'react';
 import cookie   from 'react-cookie';
 import qs       from 'querystring';
 import IstexApiStatus from './istex-api-status.jsx';
+import IstexApiDocRecord from './istex-api-doc-record.jsx';
 
 module.exports = React.createClass({
   displayName: 'ViewOpenUrl',
 
   getInitialState: function () {
     return {
+      istexId: null,
       resourceUrl: null,
       loading: true
     };
@@ -35,14 +37,15 @@ module.exports = React.createClass({
       }).then(function (openUrlRes) {
         if (self.props.location.query.noredirect !== undefined) {
           self.setState({
-            resourceUrl: self.mapApiUrlToViewUrl(openUrlRes.resourceUrl),
+            resourceUrl: self.mapApiUrlToViewUrl(openUrlRes.resourceUrl).url,
+            istexId: self.mapApiUrlToViewUrl(openUrlRes.resourceUrl).istexId,
             loading: false
           });
         } else {
           self.setState({
             loading: false,
           });
-          window.location = self.mapApiUrlToViewUrl(openUrlRes.resourceUrl);
+          window.location = self.mapApiUrlToViewUrl(openUrlRes.resourceUrl).url;
         }
       }).catch(function (err) {
           self.setState({
@@ -57,17 +60,19 @@ module.exports = React.createClass({
   render: function () {
     let self = this;
 
+    var docRecord = self.state.istexId ? <IstexApiDocRecord istexId={self.state.istexId} /> : null;
+
     return (
       <div className="container">
         <IstexApiStatus />
 
         <div className="alert alert-info iv-loading-openurl" role="alert" style={{display: self.state.loading ? 'block' : 'none'}}>Chargement en cours...</div>
+        
+        {docRecord}
 
         <div style={{display: self.state.resourceUrl === null ? 'none' : 'block'}}>
-          <h1>Accéder aux ressources ISTEX par OpenURL</h1>
-
           <a style={{display: self.state.resourceUrl ? 'block' : 'none'}} href={self.state.resourceUrl}>
-            <button type="button" className="btn btn-default" aria-label="Left Align">
+            <button type="button" className="btn btn-default" className="iv-openurl-fulltext-btn">
               <span className="glyphicon glyphicon-book" aria-hidden="true"></span> Accéder au document
             </button>            
           </a>
@@ -85,9 +90,9 @@ module.exports = React.createClass({
   mapApiUrlToViewUrl: function (apiUrl) {
     var matches = apiUrl.match(new RegExp('api\.istex\.fr\/document\/([A-Z0-9]{40})\/'));
     if (matches) {
-      return '/' + matches[1];
+      return { url: '/' + matches[1], istexId: matches[1] };
     } else {
-      return '';
+      return { url: '', istexId: '' };
     }
   }
 
