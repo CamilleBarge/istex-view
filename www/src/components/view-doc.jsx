@@ -1,5 +1,6 @@
 import    React from 'react';
 import cookie   from 'react-cookie';
+import IstexApiDocRecord from './istex-api-doc-record.jsx';
 import Pdf       from './react-pdf.jsx';
 var Pdf2    = require('./react-pdf2.jsx').PDF;
 var Viewer2 = require('./react-pdf2.jsx').Viewer;
@@ -54,6 +55,8 @@ module.exports = React.createClass({
   render: function () {
     let self = this;
 
+    var docRecord = self.state.istexId ? <IstexApiDocRecord istexId={self.state.istexId} /> : null;
+
     var pdfUrl = this.state.istexId ? self.config.istexApiUrl + '/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view' : '';
 
 /*
@@ -69,14 +72,11 @@ module.exports = React.createClass({
       <div className="iv-doc-container">
         <IstexApiStatus />
 
+        {docRecord}
+
         <Pdf2 src={PDF_URL}>
           <Viewer2 />
         </Pdf2>
-
-        <div>
-          <button onClick={this.prevPage}>Previous page</button>
-          <button onClick={this.nextPage}>Next page</button>
-        </div>
 
         <hr/>
         <input type="text" placeholder="ISTEX JWT token" style={{width:'100%'}}

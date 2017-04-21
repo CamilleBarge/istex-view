@@ -69,6 +69,7 @@ class Page extends React.Component {
     this.setState({ status: 'rendering' })
   } 
   _renderPage (page) {
+    var self = this;
     console.log(page)
     let { scale } = this.context 
 //    let viewport = page.getViewport(scale)
@@ -83,15 +84,28 @@ class Page extends React.Component {
     page.render({
       canvasContext: context,
       viewport
-    })
+    }).then(function () {
+      // requests the PDF text content
+      return page.getTextContent();
+    }).then(function (textContent) {
+      // creates the text layer over the image layer on the HTMLized PDF
+      var textLayer = new PDFJS.TextLayerBuilder({
+        textLayerDiv: self.refs.textLayer,
+        pageIndex: page.pageIndex + 1,
+        viewport: viewport
+      });
+      textLayer.setTextContent(textContent);
+      textLayer.render();
+    });
     
     this.setState({ status: 'rendered', page, width, height })
   }
   render () {
     let { width, height, status } = this.state
     return (
-      <div className={`pdf-page {status}`} style={{width, height}}>
+      <div className={`pdf-page {status}`} style={{width, height, position:'relative'}}>
         <canvas ref='canvas' />
+        <div className="textLayer" ref="textLayer"></div>
       </div>
     )
   }
