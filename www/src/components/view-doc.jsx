@@ -1,6 +1,9 @@
 import    React from 'react';
 import cookie   from 'react-cookie';
 import Pdf       from './react-pdf.jsx';
+var Pdf2    = require('./react-pdf2.jsx').PDF;
+var Viewer2 = require('./react-pdf2.jsx').Viewer;
+//, Viewer2}      from './react-pdf2.jsx';
 import IstexApiStatus from './istex-api-status.jsx';
 
 module.exports = React.createClass({
@@ -52,14 +55,23 @@ module.exports = React.createClass({
     let self = this;
 
     var pdfUrl = this.state.istexId ? self.config.istexApiUrl + '/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view' : '';
-    return (
-      <div className="container">
-        <IstexApiStatus />
-                
+
+/*
+
         <Pdf page={this.state.currentPage}
              file={pdfUrl}
              jwtToken={this.state.istexToken}
              onDocumentComplete={this._onDocumentComplete} />
+*/
+    const PDF_URL = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf';
+
+    return (
+      <div className="iv-doc-container">
+        <IstexApiStatus />
+
+        <Pdf2 src={PDF_URL}>
+          <Viewer2 />
+        </Pdf2>
 
         <div>
           <button onClick={this.prevPage}>Previous page</button>
