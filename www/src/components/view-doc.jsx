@@ -1,5 +1,4 @@
 import    React from 'react';
-import cookie   from 'react-cookie';
 import {PDF, Viewer} from './react-pdf2.jsx';
 import IstexApiStatus from './istex-api-status.jsx';
 
@@ -11,7 +10,7 @@ module.exports = React.createClass({
       currentPage: 1,
       pages: 0,
       istexId: '',
-      istexToken: cookie.load('istexToken')
+      istexToken: localStorage.getItem('istexToken')
     };
   },
 
@@ -41,7 +40,7 @@ module.exports = React.createClass({
   },
   handleIstexTokenChange: function(event) {
     this.setState({istexToken: event.target.value});
-    cookie.save('istexToken', event.target.value, { path: '/' });
+    localStorage.setItem('istexToken', event.target.value);
   },
   handleIstexIdChange: function(event) {
     this.setState({istexId: event.target.value});

@@ -4,13 +4,13 @@
   "description": "Visualisation interactive des documents ISTEX",
   "private": true,
   "scripts": {
-    "watch-js": "watchify www/src/main.jsx -t babelify --outfile www/dist/bundle.js",
+    "watch-js": "watchify -d www/src/main.jsx -t [ babelify --sourceMapsAbsolute ] --outfile www/dist/bundle.js -v",
     "watch-less": "watch 'lessc www/less/*.less > www/dist/bundle.css && echo \"-> bundle.css written\"' ./www/less/",
     "serve": "http-server -p 8080 -s -c 1 www/",
     "dev": "npm-run-all --parallel watch-js watch-less serve help",
     "help": "sleep 1 && echo '' && echo '\\033[107;33;7m --> Open \\033[1mhttp://127.0.0.1:45445\\033[0m\\033[107;33;7m in your browser for testing (through Nginx). \\033[0m'",
     "build": "npm run build-js && npm run build-css",
-    "build-js": "NODE_ENV=production browserify -d www/src/main.jsx -p [minifyify --no-map] > www/dist/bundle.js",
+    "build-js": "NODE_ENV=production browserify www/src/main.jsx -t babelify --outfile www/dist/bundle.js",
     "build-css": "lessc --clean-css='--compatibility=ie8 --advanced' www/less/*.less > www/dist/bundle.css",
     "lint": "eslint --ext .js,.jsx www/src",
     "inservversion:readme": "sed -i \"s#\\(istex/istex-view:\\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" README.md",
@@ -19,15 +19,10 @@
     "version": "npm run inservversion:readme && npm run insertversion:docker-compose && git add docker-compose.yml README.md",
     "postversion": "git push && git push --tags"
   },
-  "dependencies": {
-
-  },
+  "dependencies": {},
   "devDependencies": {
-    "react": "15.5.4",
-    "react-cookie": "^2.0.6",
-    "react-dom": "15.3.2",
-    "react-router": "^2.8.1",    
     "babel-core": "6.16.0",
+    "babel-plugin-remove-comments": "^2.0.0",
     "babel-plugin-transform-runtime": "6.15.0",
     "babel-preset-env": "^1.4.0",
     "babel-preset-react": "^6.16.0",
@@ -42,6 +37,9 @@
     "less-plugin-clean-css": "^1.5.1",
     "minifyify": "^7.3.3",
     "npm-run-all": "3.1.0",
+    "react": "15.5.4",
+    "react-dom": "15.5.4",
+    "react-router": "^2.8.1",
     "uglify-js": "^2.8.22",
     "watch": "^1.0.1",
     "watchify": "^3.9.0"

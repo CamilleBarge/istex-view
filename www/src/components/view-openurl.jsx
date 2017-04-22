@@ -1,5 +1,4 @@
 import    React from 'react';
-import cookie   from 'react-cookie';
 import qs       from 'querystring';
 import IstexApiStatus from './istex-api-status.jsx';
 import IstexApiDocRecord from './istex-api-doc-record.jsx';
