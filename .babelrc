@@ -1,4 +1,16 @@
 {
-  "presets": ["es2015", "stage-2"],
-  "plugins": ["transform-runtime"]
+  "presets": [ "env", "react" ],
+  "plugins": [ "transform-runtime" ],
+  "env": {
+    "development": {
+    },
+    "production": {
+      "minified": true,
+      "compact": true,
+      "plugins": [
+        "remove-comments",
+        "transform-object-assign"
+      ]
+    }
+  }
 }
