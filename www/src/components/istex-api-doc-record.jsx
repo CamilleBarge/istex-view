@@ -1,13 +1,14 @@
 import    React from 'react';
 
-module.exports = React.createClass({
-  displayName: 'IstexApiDocRecord',
+class IstexApiDocRecord extends React.Component {
 
-  getInitialState: function () {
-    return {};
-  },
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  }
 
-  componentDidMount () {
+  componentDidMount() {
     let self = this;
 
     // request the istex-view config
@@ -45,9 +46,9 @@ module.exports = React.createClass({
 
     });
 
-  },
+  }
 
-  render: function () {
+  render() {
     let self = this;
 
     
@@ -73,4 +74,6 @@ module.exports = React.createClass({
     );
   }
 
-});
+}
+
+module.exports = IstexApiDocRecord;

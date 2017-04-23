@@ -1,5 +1,6 @@
 import    React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 class PDF extends React.Component {
   constructor (props) {
@@ -31,13 +32,13 @@ class PDF extends React.Component {
 }
 
 PDF.propTypes = {
-  src: React.PropTypes.string.isRequired,
-  jwtToken: React.PropTypes.string
+  src: PropTypes.string.isRequired,
+  jwtToken: PropTypes.string
 }
 
 PDF.childContextTypes = {
-  pdf: React.PropTypes.object,
-  scale: React.PropTypes.number
+  pdf: PropTypes.object,
+  scale: PropTypes.number
 }
 
 class Page extends React.Component {
@@ -114,7 +115,7 @@ class Page extends React.Component {
 }
 
 Page.propTypes = {
-  index: React.PropTypes.number.isRequired
+  index: PropTypes.number.isRequired
 }
 Page.contextTypes = PDF.childContextTypes
 

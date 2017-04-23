@@ -3,18 +3,18 @@ import qs       from 'querystring';
 import IstexApiStatus from './istex-api-status.jsx';
 import IstexApiDocRecord from './istex-api-doc-record.jsx';
 
-module.exports = React.createClass({
-  displayName: 'ViewOpenUrl',
+class ViewOpenUrl extends React.Component {
 
-  getInitialState: function () {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       istexId: null,
       resourceUrl: null,
       loading: true
     };
-  },
+  }
 
-  componentDidMount () {
+  componentDidMount() {
     let self = this;
 
     // request the istex-view config
@@ -25,6 +25,8 @@ module.exports = React.createClass({
 
       // ask istex api about the requested document
       // ex: https://api.istex.fr/document/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&noredirect
+      self.props.location.query = qs.parse(self.props.location.search.slice(1));
+      console.log('PARAMS2', self.props)
       if (self.props.location.query.sid) {
         self.props.location.query.sid += ',istex-view'
       } else {
@@ -54,9 +56,9 @@ module.exports = React.createClass({
       });
       
     });
-  },
+  }
 
-  render: function () {
+  render() {
     let self = this;
 
     var docRecord = self.state.istexId ? <IstexApiDocRecord istexId={self.state.istexId} /> : null;
@@ -84,9 +86,9 @@ module.exports = React.createClass({
 
       </div>
     );
-  },
+  }
 
-  mapApiUrlToViewUrl: function (apiUrl) {
+  mapApiUrlToViewUrl(apiUrl) {
     var matches = apiUrl.match(new RegExp('api\.istex\.fr\/document\/([A-Z0-9]{40})\/'));
     if (matches) {
       return { url: '/' + matches[1], istexId: matches[1] };
@@ -95,4 +97,7 @@ module.exports = React.createClass({
     }
   }
 
-});
+}
+
+module.exports = ViewOpenUrl;
+

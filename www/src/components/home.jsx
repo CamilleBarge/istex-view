@@ -1,17 +1,18 @@
 import    React from 'react';
 import    IstexApiStatus from './istex-api-status.jsx';
 
-module.exports = React.createClass({
-  displayName: 'Home',
+class Home extends React.Component {
 
-  getInitialState: function () {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       arks: [],
-      istexIds: []
+      istexIds: [],
+      nbIstexDoc: null,
     };
-  },
+  }
 
-  render: function () {
+  render() {
     let self = this;
     var istexIds = self.state.istexIds;
 
@@ -33,23 +34,24 @@ module.exports = React.createClass({
 
       <div className="jumbotron">
         <h1>Visualisation interactive des ressources ISTEX</h1>
+
         <p className="lead">
           ISTEX VIEW c'est une page HTML5 par objet documentaire ISTEX. Chaque page permet de visualiser le document PDF augmenté d'interactivités contextuelles de type survol de la souris ou autre. Chaque page pointe vers un objet documentaire ISTEX.
-            <ul style={{fontSize: "75%"}}>
-              <li>Page HTML5 d'un PDF ISTEX : <a href="/EB32C24EA4F9C2BDA742530690915BF9A5599422">https://view.istex.fr/EB32C24EA4F9C2BDA742530690915BF9A5599422</a></li>
-            </ul>
-
         </p>
+        <ul style={{paddingLeft: "20px"}}>
+          <li>Page HTML5 d'un PDF ISTEX : <a href="/EB32C24EA4F9C2BDA742530690915BF9A5599422">https://view.istex.fr/EB32C24EA4F9C2BDA742530690915BF9A5599422</a></li>
+        </ul>
+        
         <p className="lead">
           ISTEX VIEW c'est aussi une interface HTML5 au dessus de l'OpenURL de l'API ISTEX permettant d'informer et d'aiguiller avec convivialité l'utilisateur.
-          <ul style={{fontSize: "75%"}}>
-            <li>OpenURL d'un document ISTEX : <a href="/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&amp;noredirect">https://view.istex.fr/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&amp;noredirect</a></li>
-            <li>OpenURL d'un document non présent dans ISTEX : <a href="/openurl?rft_id=info:doi/10.1007/s00701-016-2835-z&amp;noredirect">https://view.istex.fr/openurl?rft_id=info:doi/10.1007/s00701-016-2835-z&amp;noredirect</a></li>
-          </ul>
         </p>
+        <ul style={{paddingLeft: "20px"}}>
+          <li>OpenURL d'un document ISTEX : <a href="/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&amp;noredirect">https://view.istex.fr/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&amp;noredirect</a></li>
+          <li>OpenURL d'un document non présent dans ISTEX : <a href="/openurl?rft_id=info:doi/10.1007/s00701-016-2835-z&amp;noredirect">https://view.istex.fr/openurl?rft_id=info:doi/10.1007/s00701-016-2835-z&amp;noredirect</a></li>
+        </ul>
 
         <p>
-          ISTEX VIEW permet l'accès à tous les documents présents dans la plateforme ISTEX. Ci-dessous, à titre d'exemple, ne sont listés que 15 documents tirés au hasard depuis la plateforme ISTEX .
+          ISTEX VIEW permet l'accès aux <strong>{self.state.nbIstexDoc}</strong> documents présents dans la plateforme ISTEX. A titre d'exemple, vous trouverez ci-dessous 15 documents de la plateforme ISTEX tirés au hasard.
         </p>
       </div>
 
@@ -67,9 +69,9 @@ module.exports = React.createClass({
 
 
     );
-  },
+  }
 
-  componentDidMount () {
+  componentDidMount() {
     let self = this;
 
     // to have tooltips cf http://getbootstrap.com/javascript/#tooltips-examples
@@ -95,15 +97,15 @@ module.exports = React.createClass({
         var istexIds = apiJson.hits.map(function (hit) {
           return hit.id;
         });
-        self.setState({arks: arks, istexIds: istexIds});
+        self.setState({nbIstexDoc: apiJson.total, arks: arks, istexIds: istexIds});
       }).catch(function (err) {
         self.setState({arks: [], istexIds: []});
       });
 
 
     });    
-  },
+  }
 
+}
 
-
-});
+module.exports = Home;

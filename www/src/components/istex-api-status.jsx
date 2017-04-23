@@ -1,17 +1,17 @@
 import    React from 'react';
 
-module.exports = React.createClass({
-  displayName: 'IstexApiStatus',
+class IstexApiStatus extends React.Component {
 
-  getInitialState: function () {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       // do not show warning as long as the ajax
       // request is not finished
       isAvailable: true
     };
-  },
+  }
 
-  componentDidMount () {
+  componentDidMount() {
     let self = this;
 
     // request the istex-view config
@@ -29,9 +29,9 @@ module.exports = React.createClass({
 
     });
 
-  },
+  }
 
-  render: function () {
+  render() {
     let self = this;
     if (!self.state.isAvailable) {
       return (
@@ -44,4 +44,6 @@ module.exports = React.createClass({
     }
   }
 
-});
+}
+
+module.exports = IstexApiStatus;

@@ -2,19 +2,19 @@ import    React from 'react';
 import {PDF, Viewer} from './react-pdf2.jsx';
 import IstexApiStatus from './istex-api-status.jsx';
 
-module.exports = React.createClass({
-  displayName: 'ViewDoc',
+class ViewDoc extends React.Component {
 
-  getInitialState: function () {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       currentPage: 1,
       pages: 0,
       istexId: '',
       istexToken: localStorage.getItem('istexToken')
     };
-  },
+  }
 
-  componentDidMount () {
+  componentDidMount() {
     let self = this;
 
     // request the istex-view config
@@ -22,31 +22,33 @@ module.exports = React.createClass({
       return response.json();
     }).then(function (config) {
       self.config = config;
-      self.setState({istexId: self.props.params.splat});
+      self.setState({istexId: self.props.match.params[0]});
     });
 
+  }
 
-  },
-
-  prevPage: function (ev) {
+  prevPage(ev) {
     ev.preventDefault();
     this.setState({
       currentPage: this.state.currentPage > 1 ? this.state.currentPage - 1 : 1
     });
-  },
-  nextPage: function (ev) {
+  }
+
+  nextPage(ev) {
     ev.preventDefault();
     this.setState({ currentPage: this.state.currentPage < this.state.pages ? this.state.currentPage + 1 : this.state.pages });
-  },
-  handleIstexTokenChange: function(event) {
+  }
+
+  handleIstexTokenChange(event) {
     this.setState({istexToken: event.target.value});
     localStorage.setItem('istexToken', event.target.value);
-  },
-  handleIstexIdChange: function(event) {
-    this.setState({istexId: event.target.value});
-  },
+  }
 
-  render: function () {
+  handleIstexIdChange(event) {
+    this.setState({istexId: event.target.value});
+  }
+
+  render() {
     let self = this;
 
     var pdfUrl = self.state.istexId ? self.config.istexApiUrl + '/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view' : '';
@@ -80,9 +82,13 @@ console.log('PDFURL', self.state.istexId, pdfUrl)
                value={this.state.istexToken} onChange={this.handleIstexTokenChange} />
       </div>
     );
-  },
-  _onDocumentComplete: function (pages) {
+  }
+
+  _onDocumentComplete(pages) {
     this.setState({pages: pages});
   }
 
-});
+}
+
+
+module.exports = ViewDoc;
