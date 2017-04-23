@@ -60,12 +60,6 @@ console.log('PDFURL', self.state.istexId, pdfUrl)
       </PDF>
     ) : null;
 
-/*
-        <Pdf page={this.state.currentPage}
-             file={pdfUrl}
-             jwtToken={this.state.istexToken}
-             onDocumentComplete={this._onDocumentComplete} />
-*/
     return (
       <div className="iv-doc-container">
         
