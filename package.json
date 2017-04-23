@@ -19,7 +19,13 @@
     "version": "npm run inservversion:readme && npm run insertversion:docker-compose && git add docker-compose.yml README.md",
     "postversion": "git push && git push --tags"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react": "15.5.4",
+    "react-dom": "15.5.4",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
+    "react-text-truncate": "^0.8.3"
+  },
   "devDependencies": {
     "babel-core": "6.24.1",
     "babel-plugin-remove-comments": "^2.0.0",
@@ -37,10 +43,6 @@
     "less": "^2.7.2",
     "less-plugin-clean-css": "^1.5.1",
     "npm-run-all": "4.0.2",
-    "react": "15.5.4",
-    "react-dom": "15.5.4",
-    "react-router": "^4.1.1",
-    "react-router-dom": "^4.1.1",
     "uglify-js": "^2.8.22",
     "watch": "^1.0.2",
     "watchify": "^3.9.0"

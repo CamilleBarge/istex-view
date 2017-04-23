@@ -76,13 +76,11 @@ class ViewOpenUrl extends React.Component {
         {docRecord}
 
         <div style={{display: self.state.resourceUrl === null ? 'none' : 'block'}}>
-          <a style={{display: self.state.resourceUrl ? 'block' : 'none'}} href={self.state.resourceUrl}>
-            <button type="button" className="btn btn-default" className="iv-openurl-fulltext-btn">
+          <a className="iv-openurl-fulltext-btn btn btn-primary" style={{display: self.state.resourceUrl ? 'block' : 'none', width: '14em'}} href={self.state.resourceUrl}>
               <span className="glyphicon glyphicon-book" aria-hidden="true"></span> Accéder au document
-            </button>            
           </a>
           <div style={{display: self.state.resourceUrl ? 'none' : 'block'}}>
-            <div className="alert alert-warning" role="alert" >
+            <div className="alert alert-warning" role="alert">
               <span className="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Document introuvable dans la plateforme ISTEX
             </div>
           </div>

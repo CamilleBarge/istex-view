@@ -1,10 +1,12 @@
-import    React from 'react';
+import        React from 'react';
+import TextTruncate from 'react-text-truncate';
 
 class IstexApiDocRecord extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      abstractNbLineView: 4
     };
   }
 
@@ -61,18 +63,25 @@ class IstexApiDocRecord extends React.Component {
       });
       authors.push(<span className="iv-author-block" key={idX}><span className="iv-author-name" title={author.affiliations[0]}><a>{author.name}</a></span> {affiliations}{idX < affiliations.length ? ',' : ''}</span>);
     });
-
-
     return (
       <div className="iv-doc-record well">
         <h3>{self.state.atitle}</h3>
         <p>
           <span className="glyphicon glyphicon-barcode"></span> Article publié dans <a href="#">{self.state.title}</a> <span className="iv-doc-record-ref">[ <span className="">{self.state.publicationDate}</span>, Volume <span className="">{self.state.vol}</span>, Issue <span className="">{self.state.issue}</span>, Pages <span className="">{self.state.pageFirst}{self.state.pageLast}</span>, ISSN : {self.state.issn}, eISSN : {self.state.eissn}, DOI : {self.state.doi} ]</span></p>
         <p><span className="glyphicon glyphicon-user"></span> Article écrit par {authors}</p>
-        <p>{self.state.abstract}</p>
+        <p>
+          <TextTruncate
+            line={self.state.abstractNbLineView}
+            truncateText="…"
+            text={self.state.abstract}
+            textTruncateChild={<button className="btn btn-default btn-xs" onClick={() => { self.setState({ abstractNbLineView: self.state.abstractNbLineView + 10 }) }}><span className="glyphicon glyphicon-plus"></span></button>}
+          />
+        </p>
       </div>
     );
   }
+
+
 
 }
 
