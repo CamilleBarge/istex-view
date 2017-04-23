@@ -119,7 +119,7 @@ Page.propTypes = {
 }
 Page.contextTypes = PDF.childContextTypes
 
-class Viewer extends React.Component {
+class PDFViewer extends React.Component {
   render () {
     let { pdf } = this.context
     let numPages = pdf ? pdf.pdfInfo.numPages : 0
@@ -134,7 +134,7 @@ class Viewer extends React.Component {
     )
   }
 }
-Viewer.contextTypes = PDF.childContextTypes
+PDFViewer.contextTypes = PDF.childContextTypes
 
 module.exports.PDF = PDF;
-module.exports.Viewer = Viewer;
+module.exports.PDFViewer = PDFViewer;

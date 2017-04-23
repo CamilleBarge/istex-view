@@ -1,5 +1,5 @@
 import    React from 'react';
-import {PDF, Viewer} from './react-pdf2.jsx';
+import {PDF, PDFViewer} from './react-pdf.jsx';
 import IstexApiStatus from './istex-api-status.jsx';
 
 class ViewDoc extends React.Component {
@@ -56,7 +56,7 @@ console.log('PDFURL', self.state.istexId, pdfUrl)
 
     var ReactPdf2 = pdfUrl ? (
       <PDF src={pdfUrl} jwtToken={this.state.istexToken}>
-        <Viewer />
+        <PDFViewer />
       </PDF>
     ) : null;
 
