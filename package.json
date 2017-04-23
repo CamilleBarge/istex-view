@@ -10,7 +10,7 @@
     "dev": "npm-run-all --parallel watch-js watch-less serve help",
     "help": "sleep 1 && echo '' && echo '\\033[107;33;7m --> Open \\033[1mhttp://127.0.0.1:45445\\033[0m\\033[107;33;7m in your browser for testing (through Nginx). \\033[0m'",
     "build": "npm run build-js && npm run build-css",
-    "build-js": "NODE_ENV=production browserify www/src/main.jsx -t babelify --outfile www/dist/bundle.js",
+    "build-js": "NODE_ENV=production browserify www/src/main.jsx -t babelify | uglifyjs > www/dist/bundle.js",
     "build-css": "lessc --clean-css='--compatibility=ie8 --advanced' www/less/*.less > www/dist/bundle.css",
     "lint": "eslint --ext .js,.jsx www/src",
     "inservversion:readme": "sed -i \"s#\\(istex/istex-view:\\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" README.md",
