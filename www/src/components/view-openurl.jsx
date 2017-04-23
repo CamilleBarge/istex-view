@@ -26,7 +26,6 @@ class ViewOpenUrl extends React.Component {
       // ask istex api about the requested document
       // ex: https://api.istex.fr/document/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&noredirect
       self.props.location.query = qs.parse(self.props.location.search.slice(1));
-      console.log('PARAMS2', self.props)
       if (self.props.location.query.sid) {
         self.props.location.query.sid += ',istex-view'
       } else {
