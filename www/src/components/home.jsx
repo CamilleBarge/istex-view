@@ -59,7 +59,7 @@ class Home extends React.Component {
 
       <p className="iv-demo-doc-container">
         {istexIds.map((istexid) =>
-          <a href={'/' + istexid}  className="btn btn-default btn-lg iv-demo-doc" role="button">
+          <a href={'/' + istexid}  className="btn btn-default btn-lg iv-demo-doc" role="button" key={istexid}>
             <span className="glyphicon glyphicon-book" aria-hidden="true"></span> <code>{istexid}</code>
           </a>
         )}

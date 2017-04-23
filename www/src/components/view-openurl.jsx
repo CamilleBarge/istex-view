@@ -65,6 +65,11 @@ class ViewOpenUrl extends React.Component {
 
     return (
       <div className="container">
+
+        <div style={{textAlign: 'center', marginBottom: '20px'}}>
+          <img src="/images/istex-logo-150.png" alt="" />
+        </div>
+
         <IstexApiStatus />
 
         <div className="alert alert-info iv-loading-openurl" role="alert" style={{display: self.state.loading ? 'block' : 'none'}}>Chargement en cours...</div>
@@ -77,11 +82,11 @@ class ViewOpenUrl extends React.Component {
               <span className="glyphicon glyphicon-book" aria-hidden="true"></span> Accéder au document
             </button>            
           </a>
-          <p style={{display: self.state.resourceUrl ? 'none' : 'block'}}>
+          <div style={{display: self.state.resourceUrl ? 'none' : 'block'}}>
             <div className="alert alert-warning" role="alert" >
               <span className="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Document introuvable dans la plateforme ISTEX
             </div>
-          </p>
+          </div>
         </div>
 
       </div>

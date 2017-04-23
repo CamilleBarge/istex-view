@@ -56,10 +56,10 @@ class IstexApiDocRecord extends React.Component {
     self.state.aauthor && self.state.aauthor.forEach(function (author, idX) {
       console.log(author);
       let affiliations = [];
-      author.affiliations && author.affiliations.forEach(function (affi) {
-        affiliations.push(<span className="iv-author-affi glyphicon glyphicon-eye-open" title={affi}></span>)
+      author.affiliations && author.affiliations.forEach(function (affi, idX2) {
+        affiliations.push(<span className="iv-author-affi glyphicon glyphicon-eye-open" title={affi} key={idX2}></span>)
       });
-      authors.push(<span className="iv-author-block"><span className="iv-author-name" title={author.affiliations[0]}><a>{author.name}</a></span> {affiliations}{idX < affiliations.length ? ',' : ''}</span>);
+      authors.push(<span className="iv-author-block" key={idX}><span className="iv-author-name" title={author.affiliations[0]}><a>{author.name}</a></span> {affiliations}{idX < affiliations.length ? ',' : ''}</span>);
     });
 
 
