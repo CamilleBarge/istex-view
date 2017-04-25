@@ -1,5 +1,6 @@
 import    React from 'react';
 import qs       from 'querystring';
+import Footer from './footer.jsx';
 import IstexApiStatus from './istex-api-status.jsx';
 import IstexApiDocRecord from './istex-api-doc-record.jsx';
 
@@ -63,30 +64,33 @@ class ViewOpenUrl extends React.Component {
     var docRecord = self.state.istexId ? <IstexApiDocRecord istexId={self.state.istexId} /> : null;
 
     return (
-      <div className="container">
+<div>
+  <div className="container">
 
-        <div style={{textAlign: 'center', marginBottom: '20px'}}>
-          <img src="/images/istex-logo-150.png" alt="" />
+    <div style={{textAlign: 'center', marginBottom: '20px'}}>
+      <img src="/images/istex-logo-150.png" alt="" />
+    </div>
+
+    <IstexApiStatus />
+
+    <div className="alert alert-info iv-loading-openurl" role="alert" style={{display: self.state.loading ? 'block' : 'none'}}>Chargement en cours...</div>
+    
+    {docRecord}
+
+    <div style={{display: self.state.resourceUrl === null ? 'none' : 'block'}}>
+      <a className="iv-openurl-fulltext-btn btn btn-primary" style={{display: self.state.resourceUrl ? 'block' : 'none', width: '14em'}} href={self.state.resourceUrl}>
+          <span className="glyphicon glyphicon-book" aria-hidden="true"></span> Accéder au document
+      </a>
+      <div style={{display: self.state.resourceUrl ? 'none' : 'block'}}>
+        <div className="alert alert-warning" role="alert">
+          <span className="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Document introuvable dans la plateforme ISTEX
         </div>
-
-        <IstexApiStatus />
-
-        <div className="alert alert-info iv-loading-openurl" role="alert" style={{display: self.state.loading ? 'block' : 'none'}}>Chargement en cours...</div>
-        
-        {docRecord}
-
-        <div style={{display: self.state.resourceUrl === null ? 'none' : 'block'}}>
-          <a className="iv-openurl-fulltext-btn btn btn-primary" style={{display: self.state.resourceUrl ? 'block' : 'none', width: '14em'}} href={self.state.resourceUrl}>
-              <span className="glyphicon glyphicon-book" aria-hidden="true"></span> Accéder au document
-          </a>
-          <div style={{display: self.state.resourceUrl ? 'none' : 'block'}}>
-            <div className="alert alert-warning" role="alert">
-              <span className="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> Document introuvable dans la plateforme ISTEX
-            </div>
-          </div>
-        </div>
-
       </div>
+    </div>
+
+  </div>
+  <Footer />
+</div>
     );
   }
 

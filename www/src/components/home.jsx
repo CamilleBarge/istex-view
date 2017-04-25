@@ -1,4 +1,5 @@
 import    React from 'react';
+import    Footer         from './footer.jsx';
 import    IstexApiStatus from './istex-api-status.jsx';
 
 class Home extends React.Component {
@@ -17,56 +18,58 @@ class Home extends React.Component {
     var istexIds = self.state.istexIds;
 
     return (
- 
-    <div className="container" role="main">
 
-      <div className="header clearfix">
+<div> 
+  <div className="container" role="main">
 
-        <nav>
-          <ul className="nav nav-pills pull-right">
-            <li role="presentation" className="active"><a href="/">Home</a></li>
-            <li role="presentation"><a href="https://github.com/istex/istex-view">Code source</a></li>
-          </ul>
-        </nav>
-        
-        <h3 className="text-muted">ISTEX VIEW</h3>
-      </div>
+    <div className="header clearfix">
 
-      <div className="jumbotron">
-        <h1>Visualisation interactive des ressources ISTEX</h1>
-
-        <p className="lead">
-          ISTEX VIEW c'est une page HTML5 par objet documentaire ISTEX. Chaque page permet de visualiser le document PDF augmenté d'interactivités contextuelles de type survol de la souris ou autre. Chaque page pointe vers un objet documentaire ISTEX.
-        </p>
-        <ul style={{paddingLeft: "20px"}}>
-          <li>Page HTML5 d'un PDF ISTEX : <a href="/EB32C24EA4F9C2BDA742530690915BF9A5599422">https://view.istex.fr/EB32C24EA4F9C2BDA742530690915BF9A5599422</a></li>
+      <nav>
+        <ul className="nav nav-pills pull-right">
+          <li role="presentation" className="active"><a href="/">Home</a></li>
+          <li role="presentation"><a href="https://github.com/istex/istex-view">Code source</a></li>
         </ul>
-        
-        <p className="lead">
-          ISTEX VIEW c'est aussi une interface HTML5 au dessus de l'OpenURL de l'API ISTEX permettant d'informer et d'aiguiller avec convivialité l'utilisateur.
-        </p>
-        <ul style={{paddingLeft: "20px"}}>
-          <li>OpenURL d'un document ISTEX : <a href="/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&amp;noredirect">https://view.istex.fr/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&amp;noredirect</a></li>
-          <li>OpenURL d'un document non présent dans ISTEX : <a href="/openurl?rft_id=info:doi/10.1007/s00701-016-2835-z&amp;noredirect">https://view.istex.fr/openurl?rft_id=info:doi/10.1007/s00701-016-2835-z&amp;noredirect</a></li>
-        </ul>
-
-        <p>
-          ISTEX VIEW permet l'accès aux <strong>{self.state.nbIstexDoc}</strong> documents présents dans la plateforme ISTEX. A titre d'exemple, vous trouverez ci-dessous 15 documents de la plateforme ISTEX tirés au hasard.
-        </p>
-      </div>
-
-      <IstexApiStatus />
-
-      <p className="iv-demo-doc-container">
-        {istexIds.map((istexid) =>
-          <a href={'/' + istexid}  className="btn btn-default btn-lg iv-demo-doc" role="button" key={istexid}>
-            <span className="glyphicon glyphicon-book" aria-hidden="true"></span> <code>{istexid}</code>
-          </a>
-        )}
-      </p>
-
+      </nav>
+      
+      <h3 className="text-muted">ISTEX VIEW</h3>
     </div>
 
+    <div className="jumbotron">
+      <h1>Visualisation interactive des ressources ISTEX</h1>
+
+      <p className="lead">
+        ISTEX VIEW c'est une page HTML5 par objet documentaire ISTEX. Chaque page permet de visualiser le document PDF augmenté d'interactivités contextuelles de type survol de la souris ou autre. Chaque page pointe vers un objet documentaire ISTEX.
+      </p>
+      <ul style={{paddingLeft: "20px"}}>
+        <li>Page HTML5 d'un PDF ISTEX : <a href="/EB32C24EA4F9C2BDA742530690915BF9A5599422">https://view.istex.fr/EB32C24EA4F9C2BDA742530690915BF9A5599422</a></li>
+      </ul>
+      
+      <p className="lead">
+        ISTEX VIEW c'est aussi une interface HTML5 au dessus de l'OpenURL de l'API ISTEX permettant d'informer et d'aiguiller avec convivialité l'utilisateur.
+      </p>
+      <ul style={{paddingLeft: "20px"}}>
+        <li>OpenURL d'un document ISTEX : <a href="/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&amp;noredirect">https://view.istex.fr/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&amp;noredirect</a></li>
+        <li>OpenURL d'un document non présent dans ISTEX : <a href="/openurl?rft_id=info:doi/10.1007/s00701-016-2835-z&amp;noredirect">https://view.istex.fr/openurl?rft_id=info:doi/10.1007/s00701-016-2835-z&amp;noredirect</a></li>
+      </ul>
+
+      <p>
+        ISTEX VIEW permet l'accès aux <strong>{self.state.nbIstexDoc}</strong> documents présents dans la plateforme ISTEX. A titre d'exemple, vous trouverez ci-dessous 15 documents de la plateforme ISTEX tirés au hasard.
+      </p>
+    </div>
+
+    <IstexApiStatus />
+
+    <p className="iv-demo-doc-container">
+      {istexIds.map((istexid) =>
+        <a href={'/' + istexid}  className="btn btn-default btn-lg iv-demo-doc" role="button" key={istexid}>
+          <span className="glyphicon glyphicon-book" aria-hidden="true"></span> <code>{istexid}</code>
+        </a>
+      )}
+    </p>
+
+  </div>
+  <Footer />
+</div>
 
     );
   }

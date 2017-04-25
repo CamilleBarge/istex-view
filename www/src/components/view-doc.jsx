@@ -1,4 +1,5 @@
 import    React from 'react';
+import    Footer         from './footer.jsx';
 import {PDF, PDFViewer} from './react-pdf.jsx';
 import IstexApiStatus from './istex-api-status.jsx';
 
@@ -74,6 +75,8 @@ console.log('PDFURL', self.state.istexId, pdfUrl)
         <hr/>
         <input type="text" placeholder="ISTEX JWT token" style={{width:'100%'}}
                value={this.state.istexToken} onChange={this.handleIstexTokenChange} />
+
+        <Footer />
       </div>
     );
   }
