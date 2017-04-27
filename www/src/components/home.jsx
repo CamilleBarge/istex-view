@@ -1,21 +1,21 @@
 import    React from 'react';
 import    Footer         from './footer.jsx';
 import    IstexApiStatus from './istex-api-status.jsx';
+import    IstexApiDocButton from './istex-api-doc-button.jsx';
 
 class Home extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      arks: [],
-      istexIds: [],
+      demoDocs: [],
       nbIstexDoc: null,
     };
   }
 
   render() {
     let self = this;
-    var istexIds = self.state.istexIds;
+    var demoDocs = self.state.demoDocs;
 
     return (
 
@@ -60,11 +60,10 @@ class Home extends React.Component {
     <IstexApiStatus />
 
     <p className="iv-demo-doc-container">
-      {istexIds.map((istexid) =>
-        <a href={'/' + istexid}  className="btn btn-default btn-lg iv-demo-doc" role="button" key={istexid}>
-          <span className="glyphicon glyphicon-book" aria-hidden="true"></span> <code>{istexid}</code>
-        </a>
+      {demoDocs.map((doc) =>
+        <IstexApiDocButton doc={doc} />
       )}
+      {demoDocs.length == 0 ? <img src="/images/loader.gif" alt="Documents exemple en cours de chargement" /> : ''}
     </p>
 
   </div>
@@ -91,18 +90,18 @@ class Home extends React.Component {
 
       // fetch the first 10 istex documents and
       // extract the ARKs and the istexIds
-      fetch(config.istexApiUrl + '/document/?q=*&output=id,ark&sid=istex-view&size=15&rankBy=random').then(function (response) {
+      fetch(config.istexApiUrl + '/document/?q=*&output=id,ark,title,genre&sid=istex-view&size=15&rankBy=random').then(function (response) {
         return response.json();
       }).then(function (apiJson) {
-        var arks = apiJson.hits.map(function (hit) {
-          return hit.ark;
-        });
-        var istexIds = apiJson.hits.map(function (hit) {
-          return hit.id;
-        });
-        self.setState({nbIstexDoc: apiJson.total, arks: arks, istexIds: istexIds});
+        // var arks = apiJson.hits.map(function (hit) {
+        //   return hit.ark;
+        // });
+        // var istexIds = apiJson.hits.map(function (hit) {
+        //   return hit.id;
+        // });
+        self.setState({nbIstexDoc: apiJson.total, demoDocs: apiJson.hits});
       }).catch(function (err) {
-        self.setState({arks: [], istexIds: []});
+        self.setState({demoDocs: []});
       });
 
 
