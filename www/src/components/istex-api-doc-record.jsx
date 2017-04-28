@@ -66,20 +66,25 @@ class IstexApiDocRecord extends React.Component {
       authors.push(<span className="iv-author-block" key={idX}><span className="iv-author-name" title={author.affiliations[0]}><a>{author.name}</a></span> {affiliations}{idX < affiliations.length ? ',' : ''}</span>);
     });
     return (
-      <div className="iv-doc-record well" style={{display: self.state.loaded ? 'block' : 'none'}}>
-        <h3>{self.state.atitle}</h3>
-        <p>
-          <span className="glyphicon glyphicon-barcode"></span> Article publié dans <a href="#">{self.state.title}</a> <span className="iv-doc-record-ref">[ <span className="">{self.state.publicationDate}</span>, Volume <span className="">{self.state.vol}</span>, Issue <span className="">{self.state.issue}</span>, Pages <span className="">{self.state.pageFirst}{self.state.pageLast}</span>, ISSN : {self.state.issn}, eISSN : {self.state.eissn}, DOI : {self.state.doi} ]</span></p>
-        <p><span className="glyphicon glyphicon-user"></span> Article écrit par {authors}</p>
-        <p>
-          <TextTruncate
-            line={self.state.abstractNbLineView}
-            truncateText="…"
-            text={self.state.abstract}
-            textTruncateChild={<button className="btn btn-default btn-xs" onClick={() => { self.setState({ abstractNbLineView: self.state.abstractNbLineView + 10 }) }}><span className="glyphicon glyphicon-plus"></span></button>}
-          />
-        </p>
-      </div>
+<div>
+  <div className="iv-loading-openurl" style={{display: self.state.loaded ? 'none' : 'block'}}>
+    <img src="/images/loader.gif" alt="Chargement en cours" />
+  </div>
+  <div className="iv-doc-record well" style={{display: self.state.loaded ? 'block' : 'none'}}>
+    <h3>{self.state.atitle}</h3>
+    <p>
+      <span className="glyphicon glyphicon-barcode"></span> Article publié dans <a href="#">{self.state.title}</a> <span className="iv-doc-record-ref">[ <span className="">{self.state.publicationDate}</span>, Volume <span className="">{self.state.vol}</span>, Issue <span className="">{self.state.issue}</span>, Pages <span className="">{self.state.pageFirst}{self.state.pageLast}</span>, ISSN : {self.state.issn}, eISSN : {self.state.eissn}, DOI : {self.state.doi} ]</span></p>
+    <p><span className="glyphicon glyphicon-user"></span> Article écrit par {authors}</p>
+    <p>
+      <TextTruncate
+        line={self.state.abstractNbLineView}
+        truncateText="…"
+        text={self.state.abstract}
+        textTruncateChild={<button className="btn btn-default btn-xs" onClick={() => { self.setState({ abstractNbLineView: self.state.abstractNbLineView + 10 }) }}><span className="glyphicon glyphicon-plus"></span></button>}
+      />
+    </p>
+  </div>
+</div>
     );
   }
 
