@@ -73,7 +73,9 @@ class ViewOpenUrl extends React.Component {
 
     <IstexApiStatus />
 
-    <div className="alert alert-info iv-loading-openurl" role="alert" style={{display: self.state.loading ? 'block' : 'none'}}>Chargement en cours...</div>
+    <div className="iv-loading-openurl" style={{display: self.state.loading ? 'block' : 'none'}}>
+      <img src="/images/loader.gif" alt="Chargement en cours" />
+    </div>
     
     {docRecord}
 
