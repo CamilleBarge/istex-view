@@ -19,7 +19,7 @@ class Home extends React.Component {
 
     return (
 
-<div> 
+<div>
   <div className="container" role="main">
 
     <div className="header clearfix">

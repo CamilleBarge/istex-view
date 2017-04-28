@@ -22,4 +22,4 @@ ReactDOM.render((
       <Route path="/([0-9A-Z]{40})" component={ViewDoc} />
     </div>
   </Router>
-), document.getElementById('istex-viewer'));
+), document.getElementById('istex-view'));

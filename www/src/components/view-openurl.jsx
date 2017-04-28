@@ -67,10 +67,6 @@ class ViewOpenUrl extends React.Component {
 <div>
   <div className="container">
 
-    <div style={{textAlign: 'center', marginBottom: '20px'}}>
-      <img src="/images/istex-logo-150.png" alt="" />
-    </div>
-
     <IstexApiStatus />
 
     <div className="iv-loading-openurl" style={{display: self.state.loading ? 'block' : 'none'}}>
