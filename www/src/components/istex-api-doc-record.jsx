@@ -6,6 +6,7 @@ class IstexApiDocRecord extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loaded: false,
       abstractNbLineView: 4
     };
   }
@@ -24,6 +25,7 @@ class IstexApiDocRecord extends React.Component {
         return response.json();
       }).then(function (docRecord) {
         self.setState({
+          loaded: true,
           atitle: docRecord.title,
           aauthor: docRecord.author,
           doi: docRecord.doi ? docRecord.doi[0] : null,
@@ -64,7 +66,7 @@ class IstexApiDocRecord extends React.Component {
       authors.push(<span className="iv-author-block" key={idX}><span className="iv-author-name" title={author.affiliations[0]}><a>{author.name}</a></span> {affiliations}{idX < affiliations.length ? ',' : ''}</span>);
     });
     return (
-      <div className="iv-doc-record well">
+      <div className="iv-doc-record well" style={{display: self.state.loaded ? 'block' : 'none'}}>
         <h3>{self.state.atitle}</h3>
         <p>
           <span className="glyphicon glyphicon-barcode"></span> Article publié dans <a href="#">{self.state.title}</a> <span className="iv-doc-record-ref">[ <span className="">{self.state.publicationDate}</span>, Volume <span className="">{self.state.vol}</span>, Issue <span className="">{self.state.issue}</span>, Pages <span className="">{self.state.pageFirst}{self.state.pageLast}</span>, ISSN : {self.state.issn}, eISSN : {self.state.eissn}, DOI : {self.state.doi} ]</span></p>
