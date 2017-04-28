@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48.000004mm"
+   height="54.000004mm"
+   viewBox="0 0 48.000004 54.000004"
+   version="1.1"
+   id="svg5063"
+   inkscape:version="0.92.1 r15371"
+   sodipodi:docname="dessin-4.svg">
+  <defs
+     id="defs5057" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="376.42297"
+     inkscape:cy="-95.516132"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1138"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5060">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-6.238089,-5.416668)">
+    <g
+       id="g5099">
+      <g
+         id="g4840"
+         transform="translate(6.238089,-237.58333)">
+        <g
+           id="g4829"
+           transform="translate(-2.9219676,0.1000059)">
+          <g
+             id="g4503"
+             transform="matrix(1.1338583,0,0,1.1338583,2.9219676,-39.855921)">
+            <path
+               inkscape:connector-curvature="0"
+               id="path3684"
+               d="M 0,273.18751 V 249.375 H 21.166667 42.333333 V 273.18751 297 H 21.166667 0 Z"
+               style="fill:#458ca6;fill-opacity:1;stroke-width:0.13387214" />
+            <rect
+               y="252.02083"
+               x="2.6458333"
+               height="42.333332"
+               width="37.041668"
+               id="rect4491"
+               style="fill:#ffffff;fill-opacity:1;stroke-width:0.32632855" />
+          </g>
+          <rect
+             style="fill:#ffffff;fill-opacity:1;stroke-width:0.26496062"
+             id="rect4519"
+             width="15"
+             height="15"
+             x="35.92197"
+             y="242.89999"
+             ry="0" />
+          <path
+             inkscape:connector-curvature="0"
+             d="M 36.965991,256.74783 H 48.099998 L 36.965991,245.69346 Z"
+             style="fill:none;stroke:#458ca6;stroke-width:2.32593966;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             inkscape:label="Triangle"
+             id="path4803" />
+        </g>
+        <rect
+           style="fill:#458ca6;fill-opacity:1;stroke:none;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="rect4831"
+           width="9"
+           height="42"
+           x="6"
+           y="249"
+           ry="1.1384914e-013" />
+      </g>
+      <text
+         transform="scale(0.96247687,1.038986)"
+         id="text4844"
+         y="51.412289"
+         x="23.532867"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50.06690216px;line-height:1.25;font-family:serif;-inkscape-font-specification:serif;letter-spacing:0px;word-spacing:0px;fill:#c4d733;fill-opacity:1;stroke:none;stroke-width:0.52153021"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50.06690216px;font-family:serif;-inkscape-font-specification:serif;fill:#c4d733;fill-opacity:1;stroke-width:0.52153021"
+           y="51.412289"
+           x="23.532867"
+           id="tspan4842"
+           sodipodi:role="line">x</tspan></text>
+    </g>
+  </g>
+</svg>

@@ -28,7 +28,7 @@ class IstexApiDocButton extends React.Component {
 
     return (
       <a href={'/' + self.state.istexId}  className="btn btn-default btn-lg iv-doc-button" role="button" key={self.state.istexId} title={self.state.atitle}>
-        <span className="glyphicon glyphicon-book" aria-hidden="true" data-article-type={self.state.genre} title={self.state.genre}></span>
+        <div className="iv-istex-icon" data-article-type={self.state.genre} title={self.state.genre}></div>
         <span className="iv-istexid">{self.state.istexId}</span>
       </a>
     );
