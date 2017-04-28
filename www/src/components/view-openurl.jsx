@@ -81,7 +81,7 @@ class ViewOpenUrl extends React.Component {
 
     <div style={{display: self.state.resourceUrl === null ? 'none' : 'block'}}>
       <a className="iv-openurl-fulltext-btn btn btn-primary" style={{display: self.state.resourceUrl ? 'block' : 'none', width: '14em'}} href={self.state.resourceUrl}>
-          <span className="glyphicon glyphicon-book" aria-hidden="true"></span> Accéder au document
+          <div className="iv-istex-icon"></div> Accéder au document
       </a>
       <div style={{display: self.state.resourceUrl ? 'none' : 'block'}}>
         <div className="alert alert-warning" role="alert">
