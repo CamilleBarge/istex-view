@@ -22,30 +22,18 @@ class Home extends React.Component {
 <div>
   <div className="container" role="main">
 
-    <div className="header clearfix">
-
-      <nav>
-        <ul className="nav nav-pills pull-right">
-          <li role="presentation" className="active"><a href="/">Home</a></li>
-          <li role="presentation"><a href="https://github.com/istex/istex-view">Code source</a></li>
-        </ul>
-      </nav>
-      
-      <h3 className="text-muted">ISTEX VIEW</h3>
-    </div>
-
     <div className="jumbotron">
-      <h1>Visualisation interactive des ressources ISTEX</h1>
+      <h1>ISTEX VIEW - Visualisation interactive des ressources ISTEX</h1>
 
       <p className="lead">
-        ISTEX VIEW c'est une page HTML5 par objet documentaire ISTEX. Chaque page permet de visualiser le document PDF augmenté d'interactivités contextuelles de type survol de la souris ou autre. Chaque page pointe vers un objet documentaire ISTEX.
+        ISTEX VIEW permet de visualiser les objets documentaires d'ISTEX à travers des pages HTML5. Elles mettent en avant le document PDF augmenté d'interactivités contextuelles de type survol de la souris.
       </p>
       <ul style={{paddingLeft: "20px"}}>
         <li>Page HTML5 d'un PDF ISTEX : <a href="/EB32C24EA4F9C2BDA742530690915BF9A5599422">https://view.istex.fr/EB32C24EA4F9C2BDA742530690915BF9A5599422</a></li>
       </ul>
       
       <p className="lead">
-        ISTEX VIEW c'est aussi une interface HTML5 au dessus de l'OpenURL de l'API ISTEX permettant d'informer et d'aiguiller avec convivialité l'utilisateur.
+        ISTEX VIEW propose aussi une interface HTML5 au dessus de l'OpenURL de l'API ISTEX permettant d'informer et d'aiguiller avec convivialité l'utilisateur.
       </p>
       <ul style={{paddingLeft: "20px"}}>
         <li>OpenURL d'un document ISTEX : <a href="/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&amp;noredirect">https://view.istex.fr/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&amp;noredirect</a></li>
