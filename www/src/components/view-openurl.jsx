@@ -11,7 +11,10 @@ class ViewOpenUrl extends React.Component {
     this.state = {
       istexId: null,
       resourceUrl: null,
-      loading: true
+      loading: true,
+
+      errorCode: null,
+      errorMsg: '',
     };
   }
 
@@ -36,6 +39,17 @@ class ViewOpenUrl extends React.Component {
       fetch(theOpenUrl).then(function (response) {
         return response.json();
       }).then(function (openUrlRes) {
+        // error handling
+        if (openUrlRes.code) {
+          self.setState({
+            errorCode: openUrlRes.code,
+            errorMsg: openUrlRes._message,
+            loading: false,
+          });
+          return;
+        }
+
+        // that's ok: something to show
         if (self.props.location.query.noredirect !== undefined) {
           self.setState({
             resourceUrl: self.mapApiUrlToViewUrl(openUrlRes.resourceUrl).url,
@@ -67,8 +81,6 @@ class ViewOpenUrl extends React.Component {
 <div>
   <div className="container">
 
-    <IstexApiStatus />
-
     <div className="iv-loading-openurl" style={{display: self.state.loading ? 'block' : 'none'}}>
       <img src="/images/loader.gif" alt="Chargement en cours" />
     </div>
@@ -83,6 +95,13 @@ class ViewOpenUrl extends React.Component {
         <div className="alert alert-warning" role="alert">
           <div className="iv-istex-icon"></div> Le document que vous souhaitez consulter est introuvable dans la plateforme ISTEX
         </div>
+      </div>
+    </div>
+
+    <div className="iv-openurl-error" style={{display: self.state.errorCode ? 'block' : 'none'}}>
+      <div className="alert alert-warning" role="alert">
+        <div className="iv-istex-icon"></div> Le document que vous souhaitez consulter est temporairement indisponible à cause d'une erreur interne au niveau de la plateforme ISTEX. [<small><span className="glyphicon glyphicon-cog" title="Détail technique de l'erreur rencontrée"></span> {self.state.errorMsg} (erreur {self.state.errorCode})</small>]
+          <IstexApiStatus />
       </div>
     </div>
 
