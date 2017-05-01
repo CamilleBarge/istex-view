@@ -64,15 +64,12 @@ console.log('PDFURL', self.state.istexId, pdfUrl)
     return (
       <div className="iv-doc-container">
         
-        <div style={{textAlign: 'center'}}>
-          <img src="/images/istex-logo-150.png" alt="" />
-        </div>
-
         {ReactPdf2}
 
         <IstexApiStatus />
 
         <hr/>
+        <small>Cette partie temporaire permet de récupérer le PDF en s'authentifiant manuellement par <a href="https://api.istex.fr/token/">token JWT</a> le temps de l'implémentation d'un système de redirection automatique par fédération d'identités.</small>
         <input type="text" placeholder="ISTEX JWT token" style={{width:'100%'}}
                value={this.state.istexToken} onChange={this.handleIstexTokenChange} />
 
