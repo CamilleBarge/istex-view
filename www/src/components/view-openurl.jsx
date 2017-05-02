@@ -40,7 +40,7 @@ class ViewOpenUrl extends React.Component {
         return response.json();
       }).then(function (openUrlRes) {
         // error handling
-        if (openUrlRes.code) {
+        if (openUrlRes && openUrlRes.code == 500) {
           self.setState({
             errorCode: openUrlRes.code,
             errorMsg: openUrlRes._message,

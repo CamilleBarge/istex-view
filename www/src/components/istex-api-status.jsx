@@ -29,11 +29,13 @@ class IstexApiStatus extends React.Component {
           self.setState({isAvailable: true});
           return null;
         } else {
-          self.setState({isAvailable: false, errorCode: response.status});
+          self.setState({errorCode: response.status});
           return response.json();
         }
       }).then(function (responseData) {
-        self.setState({errorMsg: responseData._error || ''});
+        if (responseData && responseData._error) {
+          self.setState({isAvailable: false, errorMsg: responseData._error || ''});
+        }
       }).catch(function (err) {
         self.setState({isAvailable: false});
       });
