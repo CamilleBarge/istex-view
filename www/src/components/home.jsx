@@ -45,7 +45,7 @@ class Home extends React.Component {
       </p>
     </div>
 
-    <IstexApiStatus />
+    <IstexApiStatus config={self.props.config} />
 
     <p className="iv-demo-doc-container">
       {demoDocs.map((doc) =>
@@ -71,29 +71,23 @@ class Home extends React.Component {
     });
 
 
-    // request the istex-view config
-    fetch('/config.json').then(function (response) {
+    // fetch the first 10 istex documents and
+    // extract the ARKs and the istexIds
+    console.log('THIS IS THE HOME componentDidMount', self.props);
+    fetch(self.props.config.istexApiUrl + '/document/?q=*&output=id,ark,title,genre&sid=istex-view&size=15&rankBy=random').then(function (response) {
       return response.json();
-    }).then(function (config) {
+    }).then(function (apiSample) {
+      // var arks = apiSample.hits.map(function (hit) {
+      //   return hit.ark;
+      // });
+      // var istexIds = apiSample.hits.map(function (hit) {
+      //   return hit.id;
+      // });
+      self.setState({nbIstexDoc: apiSample.total, demoDocs: apiSample.hits});
+    }).catch(function (err) {
+      self.setState({demoDocs: []});
+    });
 
-      // fetch the first 10 istex documents and
-      // extract the ARKs and the istexIds
-      fetch(config.istexApiUrl + '/document/?q=*&output=id,ark,title,genre&sid=istex-view&size=15&rankBy=random').then(function (response) {
-        return response.json();
-      }).then(function (apiJson) {
-        // var arks = apiJson.hits.map(function (hit) {
-        //   return hit.ark;
-        // });
-        // var istexIds = apiJson.hits.map(function (hit) {
-        //   return hit.id;
-        // });
-        self.setState({nbIstexDoc: apiJson.total, demoDocs: apiJson.hits});
-      }).catch(function (err) {
-        self.setState({demoDocs: []});
-      });
-
-
-    });    
   }
 
 }

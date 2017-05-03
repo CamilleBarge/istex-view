@@ -17,15 +17,7 @@ class ViewDoc extends React.Component {
 
   componentDidMount() {
     let self = this;
-
-    // request the istex-view config
-    fetch('/config.json').then(function (response) {
-      return response.json();
-    }).then(function (config) {
-      self.config = config;
-      self.setState({istexId: self.props.match.params[0]});
-    });
-
+    self.setState({istexId: self.props.match.params[0]});
   }
 
   prevPage(ev) {
@@ -52,8 +44,7 @@ class ViewDoc extends React.Component {
   render() {
     let self = this;
 
-    var pdfUrl = self.state.istexId ? self.config.istexApiUrl + '/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view' : '';
-console.log('PDFURL', self.state.istexId, pdfUrl)
+    var pdfUrl = self.state.istexId ? self.props.config.istexApiUrl + '/document/' + this.state.istexId + '/fulltext/pdf?sid=istex-view' : '';
 
     var ReactPdf2 = pdfUrl ? (
       <PDF src={pdfUrl} jwtToken={this.state.istexToken}>
@@ -66,7 +57,7 @@ console.log('PDFURL', self.state.istexId, pdfUrl)
         
         {ReactPdf2}
 
-        <IstexApiStatus />
+        <IstexApiStatus config={self.props.config} />
 
         <hr/>
         <small>Cette partie temporaire permet de récupérer le PDF en s'authentifiant manuellement par <a href="https://api.istex.fr/token/">token JWT</a> le temps de l'implémentation d'un système de redirection automatique par fédération d'identités.</small>

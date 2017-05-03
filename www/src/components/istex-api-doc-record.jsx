@@ -14,41 +14,34 @@ class IstexApiDocRecord extends React.Component {
   componentDidMount() {
     let self = this;
 
-    // request the istex-view config
-    fetch('/config.json').then(function (response) {
+    let theUrl = self.props.config.istexApiUrl + '/document/' + self.props.istexId + '/?sid=istex-view';
+    fetch(theUrl).then(function (response) {
       return response.json();
-    }).then(function (config) {
-      self.config = config;
+    }).then(function (docRecord) {
+      self.setState({
+        loaded: true,
+        atitle: docRecord.title,
+        aauthor: docRecord.author,
+        doi: docRecord.doi ? docRecord.doi[0] : null,
+        publicationDate: docRecord.publicationDate,
+        abstract: docRecord.abstract,
 
-      let theUrl = self.config.istexApiUrl + '/document/' + self.props.istexId + '/?sid=istex-view';
-      fetch(theUrl).then(function (response) {
-        return response.json();
-      }).then(function (docRecord) {
-        self.setState({
-          loaded: true,
-          atitle: docRecord.title,
-          aauthor: docRecord.author,
-          doi: docRecord.doi ? docRecord.doi[0] : null,
-          publicationDate: docRecord.publicationDate,
-          abstract: docRecord.abstract,
+        title: docRecord.host.title,
+        issn: docRecord.host.issn ? docRecord.host.issn[0] : null,
+        eissn: docRecord.host.eissn ? docRecord.host.eissn[0] : null,
+        vol: docRecord.host.volume,
+        issue: docRecord.host.issue,
+        pageFirst: docRecord.host.pages.first,
+        pageLast: docRecord.host.pages.last,
 
-          title: docRecord.host.title,
-          issn: docRecord.host.issn ? docRecord.host.issn[0] : null,
-          eissn: docRecord.host.eissn ? docRecord.host.eissn[0] : null,
-          vol: docRecord.host.volume,
-          issue: docRecord.host.issue,
-          pageFirst: docRecord.host.pages.first,
-          pageLast: docRecord.host.pages.last,
-
-          url: theUrl
-        });
-      }).catch(function (err) {
-        self.setState({
-          title: 'not found'
-        });
+        url: theUrl
       });
-
+    }).catch(function (err) {
+      self.setState({
+        title: 'not found'
+      });
     });
+
 
   }
 
