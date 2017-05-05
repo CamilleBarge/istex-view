@@ -41,7 +41,7 @@ class Home extends React.Component {
       </ul>
 
       <p>
-        ISTEX VIEW permet l'accès aux <strong>{self.state.nbIstexDoc}</strong> documents présents dans la plateforme ISTEX. A titre d'exemple, vous trouverez ci-dessous 15 documents de la plateforme ISTEX tirés au hasard.
+        ISTEX VIEW couvre les <strong>{self.state.nbIstexDoc}</strong> documents présents dans la plateforme ISTEX. A titre d'exemple, vous trouverez ci-dessous 15 documents de la plateforme ISTEX tirés au hasard.
       </p>
     </div>
 
