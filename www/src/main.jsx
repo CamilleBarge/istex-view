@@ -25,7 +25,7 @@ function render() {
         <Route path="/openurl*"
                component={(props) => (<ViewOpenUrl config={ivConfigModel.data} location={props.location} />)} />
         <Route path="/([0-9A-Z]{40})"
-               component={(props) => (<ViewDoc config={ivConfigModel.data} location={props.location} />)} />
+               component={(props) => (<ViewDoc config={ivConfigModel.data} location={props.location} match={props.match} />)} />
       </div>
     </Router>
   ), document.getElementById('istex-view'));

@@ -7,16 +7,18 @@ class ViewDoc extends React.Component {
 
   constructor(props) {
     super(props);
+    let jwtToken = localStorage.getItem('istexToken') ? localStorage.getItem('istexToken') : '';
     this.state = {
       currentPage: 1,
       pages: 0,
       istexId: '',
-      istexToken: localStorage.getItem('istexToken')
+      istexToken: jwtToken 
     };
   }
 
   componentDidMount() {
     let self = this;
+    console.log(self.props)
     self.setState({istexId: self.props.match.params[0]});
   }
 

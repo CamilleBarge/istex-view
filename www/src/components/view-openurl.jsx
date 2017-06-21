@@ -18,18 +18,20 @@ class ViewOpenUrl extends React.Component {
     };
   }
 
-  componentDidMount() {
+  // ask istex api about the requested document
+  // ex: https://api.istex.fr/document/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&noredirect
+  requestDocumentFromOpenUrlIstexApi(locationObj) {
     let self = this;
 
-    // ask istex api about the requested document
-    // ex: https://api.istex.fr/document/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&noredirect
-    self.props.location.query = qs.parse(self.props.location.search.slice(1));
-    if (self.props.location.query.sid) {
-      self.props.location.query.sid += ',istex-view'
+    if (!self.props.config.istexApiUrl) return;
+    
+    locationObj.query = qs.parse(locationObj.search.slice(1));
+    if (locationObj.query.sid) {
+      locationObj.query.sid += ',istex-view'
     } else {
-      self.props.location.query.sid = 'istex-view'
+      locationObj.query.sid = 'istex-view'
     }
-    let theOpenUrl = self.props.config.istexApiUrl + '/document/openurl?' + qs.stringify(Object.assign({}, self.props.location.query, { noredirect: true }));
+    let theOpenUrl = self.props.config.istexApiUrl + '/document/openurl?' + qs.stringify(Object.assign({}, locationObj.query, { noredirect: true }));
     fetch(theOpenUrl).then(function (response) {
       return response.json();
     }).then(function (openUrlRes) {
@@ -44,7 +46,7 @@ class ViewOpenUrl extends React.Component {
       }
 
       // that's ok: something to show
-      if (self.props.location.query.noredirect !== undefined) {
+      if (locationObj.query.noredirect !== undefined) {
         self.setState({
           resourceUrl: self.mapApiUrlToViewUrl(openUrlRes.resourceUrl).url,
           istexId: self.mapApiUrlToViewUrl(openUrlRes.resourceUrl).istexId,
@@ -62,7 +64,12 @@ class ViewOpenUrl extends React.Component {
           resourceUrl: ''
         });
     });
-      
+  }
+
+  componentDidMount() {
+    let self = this;
+
+    self.requestDocumentFromOpenUrlIstexApi(self.props.location);
   }
 
   render() {

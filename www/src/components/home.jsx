@@ -47,12 +47,12 @@ class Home extends React.Component {
 
     <IstexApiStatus config={self.props.config} />
 
-    <p className="iv-demo-doc-container">
+    <div className="iv-demo-doc-container">
       {demoDocs.map((doc) =>
-        <IstexApiDocButton doc={doc} />
+        <IstexApiDocButton doc={doc} key={doc.id} />
       )}
       {demoDocs.length == 0 ? <img src="/images/loader.gif" alt="Documents exemple en cours de chargement" /> : ''}
-    </p>
+    </div>
 
   </div>
   <Footer />
@@ -61,20 +61,15 @@ class Home extends React.Component {
     );
   }
 
-  componentDidMount() {
+  // fetch the first 10 istex documents and
+  // extract the ARKs and the istexIds
+  requestDemoDocsFromTheApi() {
     let self = this;
 
-    // to have tooltips cf http://getbootstrap.com/javascript/#tooltips-examples
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
-      $('.container').popover()
-    });
+    if (!self.props.config.istexApiUrl) return;
 
-
-    // fetch the first 10 istex documents and
-    // extract the ARKs and the istexIds
-    console.log('THIS IS THE HOME componentDidMount', self.props);
     fetch(self.props.config.istexApiUrl + '/document/?q=*&output=id,ark,title,genre&sid=istex-view&size=15&rankBy=random').then(function (response) {
+      self.response = response;  
       return response.json();
     }).then(function (apiSample) {
       // var arks = apiSample.hits.map(function (hit) {
@@ -88,6 +83,19 @@ class Home extends React.Component {
       self.setState({demoDocs: []});
     });
 
+  }
+
+  componentDidMount() {
+    let self = this;
+
+    // to have tooltips cf http://getbootstrap.com/javascript/#tooltips-examples
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+      $('.container').popover()
+    });
+
+
+    self.requestDemoDocsFromTheApi();
   }
 
 }
