@@ -26,6 +26,7 @@ class Home extends React.Component {
       <h1>ISTEX VIEW - Visualisation interactive des ressources ISTEX</h1>
 
       <p className="lead">
+        <img src="/images/beta.png" alt="" className="pull-right" />
         ISTEX VIEW propose une visualisation HTML5 des objets documentaires de l'<a href="https://api.istex.fr">API ISTEX</a>. Chaque page HTML5 visualise un document PDF augmenté d'interactivités contextuelles de type survol de la souris.
       </p>
       <ul style={{paddingLeft: "20px"}}>
