@@ -27,7 +27,7 @@ class Home extends React.Component {
 
       <p className="lead">
         <img src="/images/beta.png" alt="" className="pull-right" />
-        ISTEX VIEW propose une visualisation HTML5 des objets documentaires de l'<a href="https://api.istex.fr">API ISTEX</a>. Chaque page HTML5 visualise un document PDF augmenté d'interactivités contextuelles de type survol de la souris.
+        ISTEX VIEW propose une visualisation HTML5 des objets documentaires exposés par l'<a href="https://api.istex.fr">API ISTEX</a>. Chaque page HTML5 visualise un document PDF augmenté d'interactivités contextuelles de type survol de la souris.
       </p>
       <ul style={{paddingLeft: "20px"}}>
         <li>Exemple d'une page HTML5 d'un PDF ISTEX : <a href="/EB32C24EA4F9C2BDA742530690915BF9A5599422">https://view.istex.fr/EB32C24EA4F9C2BDA742530690915BF9A5599422</a></li>
