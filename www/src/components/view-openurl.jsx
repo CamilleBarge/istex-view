@@ -82,7 +82,11 @@ class ViewOpenUrl extends React.Component {
   <div className="container">
 
     <div className="iv-loading-openurl" style={{display: self.state.loading ? 'block' : 'none'}}>
-      <img src="/images/loader.gif" alt="Chargement en cours" />
+      <p>
+      <img src="/images/loader.gif" alt="Chargement en cours" /><br/>
+      Nous recherchons votre document dans la plateforme ISTEX.<br/>
+      Veuillez patienter.
+      </p>
     </div>
     
     {docRecord}

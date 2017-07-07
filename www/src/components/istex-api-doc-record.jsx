@@ -62,7 +62,12 @@ class IstexApiDocRecord extends React.Component {
     return (
 <div>
   <div className="iv-loading-openurl" style={{display: self.state.loaded ? 'none' : 'block'}}>
-    <img src="/images/loader.gif" alt="Chargement en cours" />
+    <p>
+    <img src="/images/loader.gif" alt="Chargement en cours" /><br/>
+    Nous recherchons la notice de votre document dans la plateforme ISTEX.<br/>
+    Veuillez patienter.
+    <br/>
+    </p>
   </div>
   <div className="iv-doc-record well" style={{display: self.state.loaded ? 'block' : 'none'}}>
     <h3>{self.state.atitle}</h3>
