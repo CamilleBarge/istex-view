@@ -112,9 +112,15 @@ class ViewOpenUrl extends React.Component {
   }
 
   mapApiUrlToViewUrl(apiUrl) {
+    let self = this;
+
     var matches = apiUrl.match(new RegExp('api\.istex\.fr\/document\/([A-Z0-9]{40})\/'));
     if (matches) {
-      return { url: '/' + matches[1], istexId: matches[1] };
+      if (self.props.config.openUrlFTRedirectTo == 'api') {
+        return { url: apiUrl, istexId: matches[1] };
+      } else {
+        return { url: '/' + matches[1], istexId: matches[1] };
+      }
     } else {
       return { url: '', istexId: '' };
     }
