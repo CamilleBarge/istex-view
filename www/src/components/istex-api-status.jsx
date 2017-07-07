@@ -19,7 +19,7 @@ class IstexApiStatus extends React.Component {
     let self = this;
 
     if (!self.props.config.istexApiUrl) return;
-    
+
     // call istex-api to check if the server is ready
     fetch(self.props.config.istexApiUrl + '/document/?q=*&output=id&sid=istex-view').then(function (response) {
       if (response.ok) {
@@ -44,7 +44,7 @@ class IstexApiStatus extends React.Component {
     if (!self.state.isAvailable) {
       return (
         <div className="alert alert-danger" role="alert">
-          L'API ISTEX est temporairement en panne. Veuillez réessayer plus tard.
+          L'API ISTEX est temporairement indisponible. Veuillez réessayer plus tard.
           <br/><small><span className="glyphicon glyphicon-cog" title="Détail technique de l'erreur rencontrée"></span> Erreur {self.state.errorCode} : {self.state.errorMsg}</small>
         </div>
       );
