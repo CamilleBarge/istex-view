@@ -1,3 +1,4 @@
 {
-  "istexApiUrl": "https://api.istex.fr"
+  "istexApiUrl": "https://api.istex.fr",
+  "openUrlFTRedirectTo": "api"
 }
