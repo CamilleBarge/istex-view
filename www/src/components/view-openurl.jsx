@@ -1,7 +1,6 @@
 import    React from 'react';
 import qs       from 'querystring';
 import Footer from './footer.jsx';
-import IstexApiStatus from './istex-api-status.jsx';
 import IstexApiDocRecord from './istex-api-doc-record.jsx';
 
 class ViewOpenUrl extends React.Component {
@@ -59,9 +58,11 @@ class ViewOpenUrl extends React.Component {
         window.location = self.mapApiUrlToViewUrl(openUrlRes.resourceUrl).url;
       }
     }).catch(function (err) {
+        console.debug(err)
         self.setState({
           loading: false,
-          resourceUrl: ''
+          errorCode: 0,
+          errorMsg: '' + err,
         });
     });
   }
@@ -105,9 +106,15 @@ class ViewOpenUrl extends React.Component {
     <div className="iv-openurl-error" style={{display: self.state.errorCode ? 'block' : 'none'}}>
       <div className="alert alert-warning" role="alert">
         <div className="iv-istex-icon"></div> Le document que vous souhaitez consulter est temporairement indisponible à cause d'une erreur interne au niveau de la plateforme ISTEX. [<small><span className="glyphicon glyphicon-cog" title="Détail technique de l'erreur rencontrée"></span> {self.state.errorMsg} (erreur {self.state.errorCode})</small>]
-          <IstexApiStatus config={self.props.config} />
       </div>
     </div>
+
+    <div className="iv-openurl-error" style={{display: self.state.errorCode === 0 ? 'block' : 'none'}}>
+      <div className="alert alert-warning" role="alert">
+        <div className="iv-istex-icon"></div> Le document que vous souhaitez consulter est temporairement indisponible à cause d'une erreur réseau. Veuillez vérifier votre connexion Internet et <a href="">recharger cette page</a>. [<small><span className="glyphicon glyphicon-cog" title="Détail technique de l'erreur rencontrée"></span> {self.state.errorMsg} (erreur {self.state.errorCode})</small>]
+      </div>
+    </div>
+
 
   </div>
   <Footer />
