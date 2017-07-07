@@ -18,6 +18,8 @@ class IstexApiStatus extends React.Component {
   componentDidMount() {
     let self = this;
 
+    if (!self.props.config.istexApiUrl) return;
+    
     // call istex-api to check if the server is ready
     fetch(self.props.config.istexApiUrl + '/document/?q=*&output=id&sid=istex-view').then(function (response) {
       if (response.ok) {

@@ -14,6 +14,8 @@ class IstexApiDocRecord extends React.Component {
   componentDidMount() {
     let self = this;
 
+    if (!self.props.config.istexApiUrl) return;
+
     let theUrl = self.props.config.istexApiUrl + '/document/' + self.props.istexId + '/?sid=istex-view';
     fetch(theUrl).then(function (response) {
       return response.json();
