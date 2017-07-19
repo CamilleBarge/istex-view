@@ -34,7 +34,7 @@ class ViewOpenUrl extends React.Component {
     fetch(theOpenUrl).then(function (response) {
       return response.json();
     }).then(function (openUrlRes) {
-      // error handling
+      // grave error at the ISTEX API side 
       if (openUrlRes && openUrlRes.code == 500) {
         self.setState({
           errorCode: openUrlRes.code,
@@ -58,7 +58,7 @@ class ViewOpenUrl extends React.Component {
         window.location = self.mapApiUrlToViewUrl(openUrlRes.resourceUrl).url;
       }
     }).catch(function (err) {
-        console.debug(err)
+        console.error(err);
         self.setState({
           loading: false,
           errorCode: 0,
@@ -125,7 +125,7 @@ class ViewOpenUrl extends React.Component {
   mapApiUrlToViewUrl(apiUrl) {
     let self = this;
 
-    var matches = apiUrl.match(new RegExp('api\.istex\.fr\/document\/([A-Z0-9]{40})\/'));
+    var matches = apiUrl && apiUrl.match(new RegExp('api\.istex\.fr\/document\/([A-Z0-9]{40})\/'));
     if (matches) {
       if (self.props.config.openUrlFTRedirectTo == 'api') {
         return { url: apiUrl, istexId: matches[1] };
