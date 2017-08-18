@@ -19,7 +19,8 @@ COPY ./ngnix/prod.conf /etc/nginx/conf.d/default.conf
 # add source code (after npm install for docker build optimization reason)
 COPY ./www/ /usr/share/nginx/html/www/
 RUN echo '{ \
-  "istexApiUrl": "https://api.istex.fr" \
+  "istexApiUrl": "https://api.istex.fr", \
+  "openUrlFTRedirectTo": "api" \
 }' > /usr/share/nginx/html/www/config.json
 
 # ezmasterization of istex-view
