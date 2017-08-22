@@ -108,7 +108,7 @@ class ViewOpenUrl extends React.Component {
       </a>
       <div className="iv-openurl-failed" style={{display: self.state.resourceUrl ? 'none' : 'block'}}>
         <div className="alert alert-warning" role="alert">
-          <div className="iv-istex-icon"></div> Le document que vous souhaitez consulter est introuvable dans la plateforme ISTEX
+          <div className="iv-istex-icon"></div> Le document que vous souhaitez consulter n'est pas disponible dans la plateforme ISTEX
         </div>
       </div>
     </div>
