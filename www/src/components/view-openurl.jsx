@@ -44,6 +44,16 @@ class ViewOpenUrl extends React.Component {
         return;
       }
 
+      // 404 document not found: just display an HTML message telling the
+      // doc is not in the ISTEX platform
+      if (openUrlRes && openUrlRes.code == 404) {
+        self.setState({
+          loading: false,
+          resourceUrl: '',
+        });
+        return;
+      }
+
       // that's ok: something to show
       if (locationObj.query.noredirect !== undefined) {
         self.setState({
