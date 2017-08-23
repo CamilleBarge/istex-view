@@ -31,29 +31,7 @@ class ViewOpenUrl extends React.Component {
       locationObj.query.sid = 'istex-view'
     }
     let theOpenUrl = self.props.config.istexApiUrl + '/document/openurl?' + qs.stringify(Object.assign({}, locationObj.query, { noredirect: true }));
-    fetch(theOpenUrl).then(function (response) {
-      return response.json();
-    }).then(function (openUrlRes) {
-      // grave error at the ISTEX API side 
-      if (openUrlRes && openUrlRes.code == 500) {
-        self.setState({
-          errorCode: openUrlRes.code,
-          errorMsg: openUrlRes._message,
-          loading: false,
-        });
-        return;
-      }
-
-      // 404 document not found: just display an HTML message telling the
-      // doc is not in the ISTEX platform
-      if (openUrlRes && openUrlRes.code == 404) {
-        self.setState({
-          loading: false,
-          resourceUrl: '',
-        });
-        return;
-      }
-
+    $.get(theOpenUrl).done(function (openUrlRes) {
       // that's ok: something to show
       if (locationObj.query.noredirect !== undefined) {
         self.setState({
@@ -67,13 +45,32 @@ class ViewOpenUrl extends React.Component {
         });
         window.location = self.mapApiUrlToViewUrl(openUrlRes.resourceUrl).url;
       }
-    }).catch(function (err) {
-        console.error(err);
+    }).fail(function (openUrlRes) {
+      // grave error at the ISTEX API side 
+      if (openUrlRes && openUrlRes.status == 500) {
+        self.setState({
+          errorCode: openUrlRes.status,
+          errorMsg: openUrlRes._message,
+          loading: false,
+        });
+        return;
+      }
+
+      // 404 document not found: just display an HTML message telling the
+      // doc is not in the ISTEX platform
+      if (openUrlRes && openUrlRes.status == 404) {
         self.setState({
           loading: false,
-          errorCode: 0,
-          errorMsg: '' + err,
+          resourceUrl: '',
         });
+        return;
+      }
+
+      self.setState({
+        loading: false,
+        errorCode: 0,
+        errorMsg: '' + openUrlRes.statusText,
+      });
     });
   }
 

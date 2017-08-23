@@ -21,20 +21,13 @@ class IstexApiStatus extends React.Component {
     if (!self.props.config.istexApiUrl) return;
 
     // call istex-api to check if the server is ready
-    fetch(self.props.config.istexApiUrl + '/document/?q=*&output=id&sid=istex-view').then(function (response) {
-      if (response.ok) {
+    $.get(self.props.config.istexApiUrl + '/document/?q=*&output=id&sid=istex-view').done(function (response) {
         self.setState({isAvailable: true});
-        return null;
-      } else {
-        self.setState({errorCode: response.status});
-        return response.json();
+    }).fail(function (response) {
+      self.setState({isAvailable: false, errorCode: response.status});
+      if (response && response.responseJSON && response.responseJSON._error) {
+        self.setState({errorMsg: response.responseJSON._error || ''});
       }
-    }).then(function (responseData) {
-      if (responseData && responseData._error) {
-        self.setState({isAvailable: false, errorMsg: responseData._error || ''});
-      }
-    }).catch(function (err) {
-      self.setState({isAvailable: false});
     });
 
   }

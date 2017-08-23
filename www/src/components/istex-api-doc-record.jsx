@@ -17,9 +17,7 @@ class IstexApiDocRecord extends React.Component {
     if (!self.props.config.istexApiUrl) return;
 
     let theUrl = self.props.config.istexApiUrl + '/document/' + self.props.istexId + '/?sid=istex-view';
-    fetch(theUrl).then(function (response) {
-      return response.json();
-    }).then(function (docRecord) {
+    $.get(theUrl).done(function (docRecord) {
       self.setState({
         loaded: true,
         atitle: docRecord.title,
@@ -38,7 +36,7 @@ class IstexApiDocRecord extends React.Component {
 
         url: theUrl
       });
-    }).catch(function (err) {
+    }).fail(function (response) {
       self.setState({
         title: 'not found'
       });

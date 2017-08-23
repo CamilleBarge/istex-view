@@ -7,9 +7,7 @@ var IVConfigModel = function () {
   self.onChanges = [];
 
   // request the istex-view config
-  fetch('/config.json').then(function (response) {
-    return response.json();
-  }).then(function (config) {
+  $.get('/config.json').done(function (config) {
     self.data = config;
     self.initializing = false;
     self.inform();

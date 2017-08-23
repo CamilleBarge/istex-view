@@ -69,10 +69,7 @@ class Home extends React.Component {
 
     if (!self.props.config.istexApiUrl) return;
 
-    fetch(self.props.config.istexApiUrl + '/document/?q=*&output=id,ark,title,genre&sid=istex-view&size=15&rankBy=random').then(function (response) {
-      self.response = response;  
-      return response.json();
-    }).then(function (apiSample) {
+    $.get(self.props.config.istexApiUrl + '/document/?q=*&output=id,ark,title,genre&sid=istex-view&size=15&rankBy=random').done(function (apiSample) {
       // var arks = apiSample.hits.map(function (hit) {
       //   return hit.ark;
       // });
@@ -80,7 +77,7 @@ class Home extends React.Component {
       //   return hit.id;
       // });
       self.setState({nbIstexDoc: apiSample.total, demoDocs: apiSample.hits});
-    }).catch(function (err) {
+    }).fail(function (err) {
       self.setState({demoDocs: []});
     });
 
