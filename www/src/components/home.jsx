@@ -30,15 +30,15 @@ class Home extends React.Component {
         ISTEX VIEW propose une visualisation HTML5 des objets documentaires exposés par l'<a href="https://api.istex.fr">API ISTEX</a>. Chaque page HTML5 visualise un document PDF augmenté d'interactivités contextuelles de type survol de la souris.
       </p>
       <ul style={{paddingLeft: "20px"}}>
-        <li>Exemple d'une page HTML5 d'un PDF ISTEX : <a href="/EB32C24EA4F9C2BDA742530690915BF9A5599422">https://view.istex.fr/EB32C24EA4F9C2BDA742530690915BF9A5599422</a></li>
+        <li>Exemple d'une page HTML5 d'un PDF ISTEX : <a href="/document/EB32C24EA4F9C2BDA742530690915BF9A5599422">https://view.istex.fr/document/EB32C24EA4F9C2BDA742530690915BF9A5599422</a></li>
       </ul>
       
       <p className="lead">
         ISTEX VIEW propose aussi une interface HTML5 au dessus de l'<a href="https://api.istex.fr/documentation/openurl/">OpenURL de l'API ISTEX</a> permettant d'informer et d'aiguiller avec convivialité l'utilisateur.
       </p>
       <ul style={{paddingLeft: "20px"}}>
-        <li>OpenURL d'un document ISTEX : <a href="/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&amp;noredirect">https://view.istex.fr/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&amp;noredirect</a></li>
-        <li>OpenURL d'un document non présent dans ISTEX : <a href="/openurl?rft_id=info:doi/10.1007/s00701-016-2835-z&amp;noredirect">https://view.istex.fr/openurl?rft_id=info:doi/10.1007/s00701-016-2835-z&amp;noredirect</a></li>
+        <li>OpenURL d'un document ISTEX : <a href="/document/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&amp;noredirect">https://view.istex.fr/document/openurl?rft_id=info:doi/10.1136/acupmed-2012-010183&amp;noredirect</a></li>
+        <li>OpenURL d'un document non présent dans ISTEX : <a href="/document/openurl?rft_id=info:doi/10.1007/s00701-016-2835-z&amp;noredirect">https://view.istex.fr/document/openurl?rft_id=info:doi/10.1007/s00701-016-2835-z&amp;noredirect</a></li>
       </ul>
 
       <p>

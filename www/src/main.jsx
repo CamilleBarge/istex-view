@@ -22,9 +22,15 @@ function render() {
       <div>
         <Route exact path="/"
                component={(props) => (<Home config={ivConfigModel.data} location={props.location} />)} />
+
+        <Route path="/document/openurl*"
+               component={(props) => (<ViewOpenUrl config={ivConfigModel.data} location={props.location} />)} />
         <Route path="/openurl*"
                component={(props) => (<ViewOpenUrl config={ivConfigModel.data} location={props.location} />)} />
+
         <Route path="/([0-9A-Z]{40})"
+               component={(props) => (<ViewDoc config={ivConfigModel.data} location={props.location} match={props.match} />)} />
+        <Route path="/document/([0-9A-Z]{40})"
                component={(props) => (<ViewDoc config={ivConfigModel.data} location={props.location} match={props.match} />)} />
       </div>
     </Router>
