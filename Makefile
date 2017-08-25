@@ -43,4 +43,4 @@ npm: ## npm wrapper. example: make npm install --save mongodb-querystring
 	@make chown
 
 lint: ## checks the coding rules (in a dockerized process)
-	@docker run -it --rm -v $$(pwd):/app -w /app -e NODE_ENV -e http_proxy -e https_proxy node:4.4.0 npm lint
+	@docker run -it --rm -v $$(pwd):/app -w /app -e NODE_ENV -e http_proxy -e https_proxy node:4.4.0 npm run lint
