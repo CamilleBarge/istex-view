@@ -1,4 +1,6 @@
 {
+  "istexApiProtocol": "https",
+  "istexApiDomain": "api.istex.fr",
   "istexApiUrl": "https://api.istex.fr",
-  "openUrlFTRedirectTo": "api"
+  "openUrlFTRedirectTo": "api-with-ezproxy-auth"
 }

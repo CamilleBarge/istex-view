@@ -19,9 +19,12 @@ COPY ./ngnix/prod.conf /etc/nginx/conf.d/default.conf
 # add source code (after npm install for docker build optimization reason)
 COPY ./www/ /usr/share/nginx/html/www/
 RUN echo '{ \
+  "istexApiProtocol": "https", \
+  "istexApiDomain": "api.istex.fr", \
   "istexApiUrl": "https://api.istex.fr", \
-  "openUrlFTRedirectTo": "api" \
+  "openUrlFTRedirectTo": "api-with-ezproxy-auth" \
 }' > /usr/share/nginx/html/www/config.json
+
 
 # ezmasterization of istex-view
 # see https://github.com/Inist-CNRS/ezmaster

@@ -67,9 +67,12 @@ class Home extends React.Component {
   requestDemoDocsFromTheApi() {
     let self = this;
 
-    if (!self.props.config.istexApiUrl) return;
 
-    $.get(self.props.config.istexApiUrl + '/document/?q=*&output=id,ark,title,genre&sid=istex-view&size=15&rankBy=random').done(function (apiSample) {
+    if (!self.props.config.istexApiProtocol || !self.props.config.istexApiDomain) return;
+
+    let theUrl = self.props.config.istexApiProtocol + '://' + self.props.config.istexApiDomain;
+    theUrl += '/document/?q=*&output=id,ark,title,genre&sid=istex-view&size=15&rankBy=random';
+    $.get(theUrl).done(function (apiSample) {
       // var arks = apiSample.hits.map(function (hit) {
       //   return hit.ark;
       // });

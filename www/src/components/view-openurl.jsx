@@ -22,7 +22,7 @@ class ViewOpenUrl extends React.Component {
   requestDocumentFromOpenUrlIstexApi(locationObj) {
     let self = this;
 
-    if (!self.props.config.istexApiUrl) return;
+    if (!self.props.config.istexApiProtocol || !self.props.config.istexApiDomain) return;
     
     locationObj.query = qs.parse(locationObj.search.slice(1));
     if (locationObj.query.sid) {
@@ -30,7 +30,8 @@ class ViewOpenUrl extends React.Component {
     } else {
       locationObj.query.sid = 'istex-view'
     }
-    let theOpenUrl = self.props.config.istexApiUrl + '/document/openurl?' + qs.stringify(Object.assign({}, locationObj.query, { noredirect: true }));
+    let theOpenUrl = self.props.config.istexApiProtocol + '://' + self.props.config.istexApiDomain;
+    theOpenUrl += '/document/openurl?' + qs.stringify(Object.assign({}, locationObj.query, { noredirect: true }));
     $.get(theOpenUrl).done(function (openUrlRes) {
       // that's ok: something to show
       if (locationObj.query.noredirect !== undefined) {
@@ -134,7 +135,18 @@ class ViewOpenUrl extends React.Component {
 
     var matches = apiUrl && apiUrl.match(new RegExp('api\.istex\.fr\/document\/([A-Z0-9]{40})\/'));
     if (matches) {
-      if (self.props.config.openUrlFTRedirectTo == 'api') {
+      if (self.props.config.openUrlFTRedirectTo == 'api-with-ezproxy-auth') {
+        // When view.istex.fr is access behind the an ezproxy, 
+        // istexApiUrl will contains the ezproxified base URL of the ISTEX API
+        // and istexApiProtocol://istexApiDomain will contains the none ezproxified
+        // base URL of the ISTEX API.
+        // So we can easily switch to the ezproxified URL when accessing the ISTEX API ressource
+        apiUrl = apiUrl.replace(
+          self.props.config.istexApiProtocol + '://' + self.props.config.istexApiDomain,
+          self.props.config.istexApiUrl
+        );
+        return { url: apiUrl, istexId: matches[1] };
+      } else if (self.props.config.openUrlFTRedirectTo == 'api') {
         return { url: apiUrl, istexId: matches[1] };
       } else {
         return { url: '/' + matches[1], istexId: matches[1] };

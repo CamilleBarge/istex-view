@@ -15,7 +15,8 @@ ISTEX VIEW is also an HTML5 visualisation over the [ISTEX OpenURL feature](https
 
 - **`istexApiUrl`**: this is the root URL of the ISTEX API, default value is https://api.istex.fr (it can be changed to test ISTEX API [developement](https://api-dev.istex.fr) or [integration](https://api-integ.istex.fr) versions)
 - **`openUrlFTRedirectTo`**: this is how the OpenURL stuff should redirect users. Possible values are:
-  - `api`:  means the user will be redirected to the raw PDF hosted by the ISTEX API (default value since istex-view is in beta status)
+  - `api-with-ezproxy-auth`:  means the user will be redirected to the raw PDF hosted by the ISTEX API but with optional ezproxy stuff around the URL (default value since istex-view is in beta status)
+  - `api`:  means the user will be redirected to the raw PDF hosted by the ISTEX API but without any ezproxy stuff around the URL (will activate the fede auth if IP is not enabled)
   - `view`:  means the user will be redirected to the istex-view HTML5 enhanced version of the PDF
 
 ## Development
