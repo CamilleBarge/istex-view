@@ -1,6 +1,6 @@
 # istex-view
 
-[![Docker stars](https://img.shields.io/docker/stars/istex/istex-view.svg)](https://registry.hub.docker.com/u/istex/istex-view/)
+[![Tableau Trello de suivi](https://user-images.githubusercontent.com/328244/29981270-6381ed6c-8f4d-11e7-9b35-6f77b7df853f.png)](https://trello.com/b/1GdYB5sa/istex-view-suivi) [![Docker stars](https://img.shields.io/docker/stars/istex/istex-view.svg)](https://registry.hub.docker.com/u/istex/istex-view/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/istex/istex-view.svg)](https://registry.hub.docker.com/u/istex/istex-view/)
 
 ISTEX VIEW is an HTML5 visualisation of the ISTEX ressources exposed by the [ISTEX API](https://api.istex.fr). Each page is an HTMLized version of the PDF enhanced by contextual interactivities (ex: showing refbib details when mouse over).
