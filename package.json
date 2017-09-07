@@ -20,14 +20,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "help": "sleep 1 && echo '' && echo '\\033[107;33;7m --> Open \\033[1mhttp://127.0.0.1:45445\\033[0m\\033[107;33;7m in your browser for testing (through Nginx). \\033[0m'",
-    "lint": "eslint --ext .js,.jsx www/src",
-    "insertversion:index": "sed -i \"s#\\(\\?v=\\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" www/index.html",
-    "insertversion:footer": "sed -i \"s#\\(version \\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" www/src/components/footer.jsx",
+    "insertversion:index": "sed -i \"s#\\(\\?v=\\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" public/index.html",
+    "insertversion:footer": "sed -i \"s#\\(version \\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" src/components/footer.jsx",
     "insertversion:readme": "sed -i \"s#\\(istex/istex-view:\\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" README.md",
-    "insertversion:docker-compose": "sed -i \"s#\\(image: istex/istex-ark:\\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" docker-compose.yml",
-    "preversion": "#npm run lint",
-    "version": "#npm run insertversion:index && npm run insertversion:footer && npm run insertversion:readme && npm run insertversion:docker-compose && git add www/index.html www/src/components/footer.jsx docker-compose.yml README.md",
-    "postversion": "#git push && git push --tags"
+    "insertversion:docker-compose": "sed -i \"s#\\(image: istex/istex-view:\\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" docker-compose.yml",
+    "version": "npm run insertversion:index && npm run insertversion:footer && npm run insertversion:readme && npm run insertversion:docker-compose && git add public/index.html src/components/footer.jsx docker-compose.yml README.md",
+    "postversion": "git push && git push --tags"
   }
 }
