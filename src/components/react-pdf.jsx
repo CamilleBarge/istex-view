@@ -1,11 +1,10 @@
 import    React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-// import 'pdfjs-dist/build/pdf.js';
-// import 'pdfjs-dist/build/pdf.worker.js';
 
-require('pdfjs-dist/build/pdf.combined');
-require('pdfjs-dist/web/compatibility');
+import 'pdfjs-dist/build/pdf.js';
+import 'pdfjs-dist/build/pdf.worker.js';
+import 'pdfjs-dist/web/pdf_viewer.js';
 
 class PDF extends React.Component {
   constructor (props) {
@@ -22,6 +21,8 @@ class PDF extends React.Component {
     }
   }
   componentDidMount () {
+  }
+  render () {
     window.PDFJS.getDocument({
       url: this.props.src,
       httpHeaders: {
@@ -29,9 +30,9 @@ class PDF extends React.Component {
       }
     }).then((pdf) => {
       this.setState({ pdf })
+    }).catch((err) => {
+      console.error('IGNORED ERROR', err);
     })
-  }
-  render () {
     return (<div className='pdf-context'>{this.props.children}</div>) 
   }
 }
@@ -74,7 +75,7 @@ class Page extends React.Component {
   }
   _loadPage (pdf) {
     if (this.state.status === 'rendering' || this.state.page != null) return; 
-    pdf.getPage(this.props.index).then(this._renderPage.bind(this))
+    pdf.getPage(this.props.index).then(this._renderPage.bind(this));
     this.setState({ status: 'rendering' })
   } 
   _renderPage (page) {
@@ -105,7 +106,7 @@ class Page extends React.Component {
       textLayer.setTextContent(textContent);
       textLayer.render();
     });
-    
+
     this.setState({ status: 'rendered', page, width, height })
   }
   render () {

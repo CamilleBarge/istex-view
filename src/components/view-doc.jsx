@@ -64,7 +64,7 @@ class ViewDoc extends React.Component {
         <hr/>
         <small>Cette partie temporaire permet de récupérer le PDF en s'authentifiant manuellement par <a href="https://api.istex.fr/token/">token JWT</a> le temps de l'implémentation d'un système de redirection automatique par fédération d'identités.</small>
         <input type="text" placeholder="ISTEX JWT token" style={{width:'100%'}}
-               value={this.state.istexToken} onChange={this.handleIstexTokenChange} />
+               value={this.state.istexToken} onChange={this.handleIstexTokenChange.bind(this)} />
 
         <Footer />
       </div>
