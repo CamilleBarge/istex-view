@@ -11,7 +11,8 @@ class PDF extends React.Component {
     super(props)
     this.state = {
       pdf: null,
-      scale: 1.2
+      scale: 1.2,
+      message: 'Chargement du PDF en cours...'
     }
   }
   getChildContext () {
@@ -21,19 +22,24 @@ class PDF extends React.Component {
     }
   }
   componentDidMount () {
+    this.forceUpdate();
   }
-  render () {
+
+  componentDidUpdate () {
     window.PDFJS.getDocument({
       url: this.props.src,
       httpHeaders: {
         Authorization: 'Bearer ' + this.props.jwtToken
       }
     }).then((pdf) => {
-      this.setState({ pdf })
+      this.setState({ pdf, message: '' })
     }).catch((err) => {
       console.error('IGNORED ERROR', err);
     })
-    return (<div className='pdf-context'>{this.props.children}</div>) 
+  }
+
+  render () {
+    return (<div className='pdf-context'>{this.state.message ? this.state.message : this.props.children}</div>) 
   }
 }
 
