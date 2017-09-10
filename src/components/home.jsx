@@ -12,20 +12,9 @@ class Home extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      demoDocs: [],
-      nbIstexDoc: null,
-    };
-
-
   }
 
   render() {
-    let self = this;
-    // var demoDocs = self.state.demoDocs;
-//    console.log('render', JSON.stringify(this.props.config));
-
-
 
     return (
 
@@ -52,19 +41,17 @@ class Home extends React.Component {
       </ul>
 
       <p>
-        ISTEX VIEW couvre les <strong>{self.props.demoDocs.nbIstexDoc}</strong> documents présents dans la plateforme ISTEX. A titre d'exemple, vous trouverez ci-dessous 15 documents de la plateforme ISTEX tirés au hasard.
+        ISTEX VIEW couvre les <strong>{this.props.demoDocs.nbIstexDoc}</strong> documents présents dans la plateforme ISTEX. A titre d'exemple, vous trouverez ci-dessous 15 documents de la plateforme ISTEX tirés au hasard.
       </p>
     </div>
 
-    {/*
-    <IstexApiStatus config={self.props.config} />
-    */}
+    <IstexApiStatus />
 
     <div className="iv-demo-doc-container">
-      {self.props.demoDocs.hits && self.props.demoDocs.hits.map((doc) =>
+      {this.props.demoDocs.hits && this.props.demoDocs.hits.map((doc) =>
         <IstexApiDocButton doc={doc} key={doc.id} />
       )}
-      {!self.props.demoDocs.hits ? <img src="/images/loader.gif" alt="Documents exemple en cours de chargement" /> : ''}
+      {!this.props.demoDocs.hits ? <img src="/images/loader.gif" alt="Documents exemple en cours de chargement" /> : ''}
     </div>
 
   </div>
@@ -75,14 +62,9 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    let self = this;
-
-    console.log('componentDidMount', JSON.stringify(this.props.config));
 
     this.props.fetchConfig(); // call the action FETCH_CONFIG          
     this.props.fetchDemoDocsFromTheApi();      
-
-    //console.log('constructor', this.props.config.loaded);
 
     // // to have tooltips cf http://getbootstrap.com/javascript/#tooltips-examples
     // $(function () {
@@ -90,15 +72,13 @@ class Home extends React.Component {
     //   $('.container').popover()
     // });
 
-    //self.requestDemoDocsFromTheApi();
   }
 
 }
 
 
 const mapStateToProps = (state, ownProps) => {
-  //console.log('mapStateToProps', state);
-  return state;
+  return { demoDocs: state.demoDocs };
 };
 
 const mapDispatchToProps = (dispatch) => {

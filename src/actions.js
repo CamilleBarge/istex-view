@@ -11,3 +11,11 @@ export const fetchDemoDocsFromTheApi = () => {
 export const updateDemoDocsFromTheApi = (demoDocs) => {
   return { type: 'UPDATE_DEMO_DOCS_FROM_THE_API', demoDocs };
 };
+
+export const fetchApiStatus = () => {
+  return { type: 'FETCH_API_STATUS' };
+};
+export const updateApiStatus = (apiStatus) => {
+  return { type: 'UPDATE_API_STATUS', apiStatus };
+};
+

@@ -30,7 +30,26 @@ export const docsReducer = (state = {}, action) => {
   }
 };
 
+
+const initialStateApiStatus = {
+  isAvailable: undefined
+};
+export const apiStatusReducer = (state = initialStateApiStatus, action) => {
+  switch (action.type) {
+  
+  case 'FETCH_API_STATUS':
+    return state;
+
+  case 'UPDATE_API_STATUS':
+    return { ...state, ...action.apiStatus };
+
+  default:
+    return state;
+  }
+};
+
 export const reducer = combineReducers({
   config: configReducer,
-  demoDocs: docsReducer
+  demoDocs: docsReducer,
+  apiStatus: apiStatusReducer,
 });
