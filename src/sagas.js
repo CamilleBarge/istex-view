@@ -1,11 +1,20 @@
 import * as Actions from './actions.js';
-import { call, put, all, take, takeEvery, takeLatest } from 'redux-saga/effects';
-import axios from 'axios';
+import { call, put, all, take, takeEvery, takeLatest,cancelled } from 'redux-saga/effects';
+import axios, { CancelToken } from 'axios';
 
 function* fetchConfig() {
   console.log('SAGA fetchConfig START');
-  const config = yield call(axios, '/config.json');
-  console.log('SAGA fetchConfig END');
+  let config;
+  const source = CancelToken.source();
+  try {
+    config = yield call(axios, '/config.json', { cancelToken: source.token });
+  } finally {
+    if (yield cancelled()) {
+      source.cancel();
+      console.log('SAGA fetchConfig CANCELED');  
+    }
+  }
+  console.log('SAGA fetchConfig END');  
   yield put(Actions.updateConfig({ ...config.data, loaded: true }));
 }
 

@@ -21,8 +21,9 @@ class IstexApiStatus extends React.Component {
   }
 
   componentDidMount() {
-
-    this.props.fetchConfig(); // call the action FETCH_CONFIG          
+    setTimeout(function () {
+      this.props.fetchConfig(); // call the action FETCH_CONFIG
+    }.bind(this), 1000);
     this.props.fetchApiStatus();
 
   }
