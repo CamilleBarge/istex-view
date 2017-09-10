@@ -4,6 +4,10 @@ import    Footer         from './footer.jsx';
 import    IstexApiStatus from './istex-api-status.jsx';
 import    IstexApiDocButton from './istex-api-doc-button.jsx';
 
+import * as Actions from '../actions.js';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 class Home extends React.Component {
 
   constructor(props) {
@@ -12,11 +16,16 @@ class Home extends React.Component {
       demoDocs: [],
       nbIstexDoc: null,
     };
+
+
   }
 
   render() {
     let self = this;
-    var demoDocs = self.state.demoDocs;
+    // var demoDocs = self.state.demoDocs;
+//    console.log('render', JSON.stringify(this.props.config));
+
+
 
     return (
 
@@ -43,17 +52,19 @@ class Home extends React.Component {
       </ul>
 
       <p>
-        ISTEX VIEW couvre les <strong>{self.state.nbIstexDoc}</strong> documents présents dans la plateforme ISTEX. A titre d'exemple, vous trouverez ci-dessous 15 documents de la plateforme ISTEX tirés au hasard.
+        ISTEX VIEW couvre les <strong>{self.props.demoDocs.nbIstexDoc}</strong> documents présents dans la plateforme ISTEX. A titre d'exemple, vous trouverez ci-dessous 15 documents de la plateforme ISTEX tirés au hasard.
       </p>
     </div>
 
+    {/*
     <IstexApiStatus config={self.props.config} />
+    */}
 
     <div className="iv-demo-doc-container">
-      {demoDocs.map((doc) =>
+      {self.props.demoDocs.hits && self.props.demoDocs.hits.map((doc) =>
         <IstexApiDocButton doc={doc} key={doc.id} />
       )}
-      {demoDocs.length == 0 ? <img src="/images/loader.gif" alt="Documents exemple en cours de chargement" /> : ''}
+      {!self.props.demoDocs.hits ? <img src="/images/loader.gif" alt="Documents exemple en cours de chargement" /> : ''}
     </div>
 
   </div>
@@ -63,32 +74,15 @@ class Home extends React.Component {
     );
   }
 
-  // fetch the first 10 istex documents and
-  // extract the ARKs and the istexIds
-  requestDemoDocsFromTheApi() {
-    let self = this;
-
-
-    if (!self.props.config.istexApiProtocol || !self.props.config.istexApiDomain) return;
-
-    let theUrl = self.props.config.istexApiProtocol + '://' + self.props.config.istexApiDomain;
-    theUrl += '/document/?q=*&output=id,ark,title,genre&sid=istex-view&size=15&rankBy=random';
-    $.get(theUrl).done(function (apiSample) {
-      // var arks = apiSample.hits.map(function (hit) {
-      //   return hit.ark;
-      // });
-      // var istexIds = apiSample.hits.map(function (hit) {
-      //   return hit.id;
-      // });
-      self.setState({nbIstexDoc: apiSample.total, demoDocs: apiSample.hits});
-    }).fail(function (err) {
-      self.setState({demoDocs: []});
-    });
-
-  }
-
   componentDidMount() {
     let self = this;
+
+    console.log('componentDidMount', JSON.stringify(this.props.config));
+
+    this.props.fetchConfig(); // call the action FETCH_CONFIG          
+    this.props.fetchDemoDocsFromTheApi();      
+
+    //console.log('constructor', this.props.config.loaded);
 
     // // to have tooltips cf http://getbootstrap.com/javascript/#tooltips-examples
     // $(function () {
@@ -96,10 +90,21 @@ class Home extends React.Component {
     //   $('.container').popover()
     // });
 
-
-    self.requestDemoDocsFromTheApi();
+    //self.requestDemoDocsFromTheApi();
   }
 
 }
 
-export default Home;
+
+const mapStateToProps = (state, ownProps) => {
+  //console.log('mapStateToProps', state);
+  return state;
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(Actions, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
+
+
