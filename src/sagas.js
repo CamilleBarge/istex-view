@@ -14,13 +14,13 @@ function* fetchConfig() {
       console.log('SAGA fetchConfig CANCELED');  
     }
   }
-  console.log('SAGA fetchConfig END');  
+  console.log('SAGA fetchConfig END', config);  
   yield put(Actions.updateConfig({ ...config.data, loaded: true }));
+  return config.data;
 }
 
 function* fetchDemoDocsFromTheApi(action) {
-  const updateConfig = yield take('UPDATE_CONFIG'); // wait for the config to be loaded
-  const config = updateConfig.config;
+  const config = yield call(fetchConfig);
   if (!config.istexApiProtocol || !config.istexApiDomain) return;
   
   let theUrl = config.istexApiProtocol + '://' + config.istexApiDomain;
@@ -31,9 +31,7 @@ function* fetchDemoDocsFromTheApi(action) {
 }
 
 function* fetchApiStatus() {
-
-  const updateConfig = yield take('UPDATE_CONFIG'); // wait for the config to be loaded
-  const config = updateConfig.config;
+  const config = yield call(fetchConfig);
   if (!config.istexApiProtocol || !config.istexApiDomain) return;
   
   let theUrl = config.istexApiProtocol + '://' + config.istexApiDomain;
