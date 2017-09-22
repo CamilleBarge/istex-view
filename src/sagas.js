@@ -1,5 +1,5 @@
 import * as Actions from './actions.js';
-import { call, put, all, take, takeEvery, takeLatest,cancelled } from 'redux-saga/effects';
+import { call, put, all, take, takeEvery, takeLatest, cancelled, select } from 'redux-saga/effects';
 import axios, { CancelToken } from 'axios';
 
 function* fetchConfig() {
@@ -20,7 +20,7 @@ function* fetchConfig() {
 }
 
 function* fetchDemoDocsFromTheApi(action) {
-  const config = yield call(fetchConfig);
+  const config = yield select(state => state.config);
   if (!config.istexApiProtocol || !config.istexApiDomain) return;
   
   let theUrl = config.istexApiProtocol + '://' + config.istexApiDomain;
@@ -31,7 +31,7 @@ function* fetchDemoDocsFromTheApi(action) {
 }
 
 function* fetchApiStatus() {
-  const config = yield call(fetchConfig);
+  const config = yield select(state => state.config);
   if (!config.istexApiProtocol || !config.istexApiDomain) return;
   
   let theUrl = config.istexApiProtocol + '://' + config.istexApiDomain;
@@ -62,9 +62,15 @@ function* fetchApiStatus() {
 
 
 export default function* rootSaga() {
+  yield call(fetchConfig);
+  yield call(fetchDemoDocsFromTheApi);
+  yield call(fetchApiStatus);
+
+/* 
   yield all([
     takeLatest('FETCH_CONFIG', fetchConfig),
     takeLatest('FETCH_DEMO_DOCS_FROM_THE_API', fetchDemoDocsFromTheApi),
     takeLatest('FETCH_API_STATUS', fetchApiStatus),
   ]);
+*/
 }

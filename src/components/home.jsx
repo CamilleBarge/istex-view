@@ -64,7 +64,7 @@ class Home extends React.Component {
   componentDidMount() {
 
     // this.props.fetchConfig(); // call the action FETCH_CONFIG          
-    this.props.fetchDemoDocsFromTheApi();      
+    //this.props.fetchDemoDocsFromTheApi();      
 
     // // to have tooltips cf http://getbootstrap.com/javascript/#tooltips-examples
     // $(function () {

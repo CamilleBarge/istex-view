@@ -8,7 +8,7 @@ export const configReducer = (state = {loaded: false}, action) => {
     return { ...state , loaded: false };
   
   case 'UPDATE_CONFIG':
-//    console.log('UPDATE_CONFIG', action);
+//    console.log('UPDATE_CONFIG', { ...state, ...action.config });
     return { ...state, ...action.config };
 
   default:
