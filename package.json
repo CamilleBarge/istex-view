@@ -16,9 +16,10 @@
     "insertversion:index": "sed -i \"s#\\(\\?v=\\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" www/index.html",
     "insertversion:footer": "sed -i \"s#\\(version \\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" www/src/components/footer.jsx",
     "insertversion:readme": "sed -i \"s#\\(istex/istex-view:\\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" README.md",
-    "insertversion:docker-compose": "sed -i \"s#\\(image: istex/istex-ark:\\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" docker-compose.yml",
+    "insertversion:docker-compose": "sed -i \"s#\\(image: istex/istex-view:\\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" docker-compose*.yml",
+    "insertversion:makefile": "sed -i \"s#\\(istex/istex-view:\\)\\([\\.a-z0-9]\\+\\)#\\1${npm_package_version}#g\" Makefile",
     "preversion": "#npm run lint",
-    "version": "npm run insertversion:index && npm run insertversion:footer && npm run insertversion:readme && npm run insertversion:docker-compose && git add www/index.html www/src/components/footer.jsx docker-compose.yml README.md",
+    "version": "npm run insertversion:index && npm run insertversion:footer && npm run insertversion:readme && npm run insertversion:docker-compose && npm run insertversion:makefile && git add www/index.html www/src/components/footer.jsx docker-compose*.yml Makefile README.md",
     "postversion": "git push && git push --tags"
   },
   "dependencies": {
