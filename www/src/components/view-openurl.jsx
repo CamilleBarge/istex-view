@@ -139,8 +139,8 @@ class ViewOpenUrl extends React.Component {
       matches = apiUrl && apiUrl.match(new RegExp('api\.istex\.fr\/document\/([A-Z0-9]{40})\/'));
     }
 
-    if (apiUrl.includes('/ark:/')) {
-      matches = apiUrl && apiUrl.match(new RegExp('api\.istex\.fr\/(ark:\/[0-9]{5}\/[A-Z0-9]{3}-[A-Z0-9]{8}-[A-Z0-9])\/'));
+    if (apiUrl.includes('/ark:/67375/')) {
+      matches = apiUrl && apiUrl.match(new RegExp('api\.istex\.fr\/(ark:/67375\/[A-Z0-9]{3}-[A-Z0-9]{8}-[A-Z0-9])\/'));
     }
     
 
