@@ -28,7 +28,7 @@ function render() {
         <Route path="/openurl*"
                component={(props) => (<ViewOpenUrl config={ivConfigModel.data} location={props.location} />)} />
 
-        <Route path="/(ark:/[0-9]{5}/[A-Z0-9]{3}-[A-Z0-9]{8}-[A-Z0-9])"
+        <Route path="/(ark:/67375/[A-Z0-9]{3}-[A-Z0-9]{8}-[A-Z0-9])"
                component={(props) => (<ViewDoc config={ivConfigModel.data} location={props.location} match={props.match} />)} />
         <Route path="/([0-9A-Z]{40})"
                component={(props) => (<ViewDoc config={ivConfigModel.data} location={props.location} match={props.match} />)} />
